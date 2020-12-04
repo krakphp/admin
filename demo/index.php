@@ -1,6 +1,7 @@
 <?php
 
 use Krak\Admin\Templates\Crud\CrudCreatePage;
+use Krak\Admin\Templates\Crud\CrudListPage;
 use Krak\Admin\Templates\HomePage;
 use League\Plates\Bridge\Symfony\PlatesBundle;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
@@ -32,6 +33,8 @@ $kernel = new class('dev', true) extends Kernel
             ->controller([$this, 'homePage'])
         ->add('crud_create', '/crud/create')
             ->controller([$this, 'crudCreatePage'])
+        ->add('crud_list', '/crud')
+            ->controller([$this, 'crudListPage'])
         ;
     }
 
@@ -45,6 +48,10 @@ $kernel = new class('dev', true) extends Kernel
 
     public function crudCreatePage() {
         return new CrudCreatePage([]);
+    }
+
+    public function crudListPage() {
+        return new CrudListPage();
     }
 };
 

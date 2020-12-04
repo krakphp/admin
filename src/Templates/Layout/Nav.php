@@ -102,9 +102,11 @@ final class Nav
         };
     }
 
-    public static function Item(string $title, bool $selected = false) {
-        return function() use ($title, $selected) {
-            ?> <li class="<?=$selected ? 'text-pink-50 bg-pink-600' : 'text-pink-200'?> hover:text-pink-50 hover:bg-pink-600 cursor-pointer rounded-md p-2"><?=$title?></li> <?php
+    public static function Item(string $title, string $link, bool $selected = false) {
+        return function() use ($title, $link, $selected) {
+        ?>  <li class="<?=$selected ? 'text-pink-50 bg-pink-600' : 'text-pink-200'?> hover:text-pink-50 hover:bg-pink-600 cursor-pointer rounded-md p-2">
+              <a class="block" href="<?=$link?>"><?=$title?></a>
+            </li> <?php
         };
     }
 

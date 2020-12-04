@@ -13,15 +13,21 @@ final class Typography
         };
     }
 
-    public static function button($content, $attrs = []) {
-        return function() use ($content, $attrs) {
-            ?> <button <?=attrs(['type' => 'button', 'class' => 'rounded-sm hover:underline'], $attrs)?>><?=p($content)?></button> <?php
-        };
-    }
-
     public static function buttonSuccess($content, $attrs = []) {
         return function() use ($content, $attrs) {
             ?> <?=p(self::button($content, attrs(['class' => 'bg-green-400 hover:bg-green-500 text-white'], $attrs)))?> <?php
+        };
+    }
+
+    public static function Button(string $title, string $type = 'info', array $attrs = []) {
+        return function() use ($title, $type, $attrs) {
+            switch ($type) {
+            case 'success': $classes = 'bg-green-400 hover:bg-green-500'; break;
+            case 'info':
+            default: $classes = 'bg-blue-500 hover:bg-blue-600'; break;
+            }
+
+            ?> <button class="rounded-md hover:underline text-sm <?=$classes?> text-white px-4 py-2" <?=attrs($attrs)?>><?=$title?></button> <?php
         };
     }
 }

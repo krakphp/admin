@@ -22,12 +22,12 @@ final class CrudCreatePage
         echo p((new OneColumnLayout(function() {
         ?>  <h1 class="font-semibold text-2xl">Some Entity | Create</h1>
             <form class="px-2 grid grid-cols-2">
-                <?=self::FormGroup(function() {
+                <?=p(self::FormGroup(function() {
                   ?>
                       <label class="block font-semibold" for="field1">Field 1:</label>
-                      <input type="text" name="field1" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+                      <input type="text" name="field1" class="mt-1 focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-pink-400 rounded-md">
                       <?php
-                })?>
+                }))?>
                 <?=p(self::FormGroup(function() {
                     ?> <label>
                     Field 2:
