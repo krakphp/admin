@@ -71,6 +71,10 @@ function e(string $string, $flags = ENT_COMPAT | ENT_HTML401, string $encoding =
     return htmlspecialchars($string, $flags, $encoding, $doubleEncode);
 }
 
+/**
+ * Converts array like `['required' => null, 'class' => 'abc''] to a stringable like: 'required class="abc"' to be inserted
+ * into html strings.
+ */
 function attrs(...$attributeSets): HTMLAttributeSet {
     return new HTMLAttributeSet($attributeSets);
 }
@@ -102,7 +106,11 @@ final class HTMLAttributeSet implements \IteratorAggregate
         }
         $html = '';
         foreach ($attrMap as $key => $value) {
-            $html .= " {$key}=\"$value\"";
+            if ($value !== null) {
+                $html .= " {$key}=\"$value\"";
+            } else {
+                $html .= " {$key}";
+            }
         }
         return ltrim($html);
     }

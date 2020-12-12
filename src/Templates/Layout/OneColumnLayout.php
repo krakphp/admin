@@ -35,7 +35,7 @@ final class OneColumnLayout
                 Nav::Item('Crud Create', path('crud_create')),
               ]))?>
               <div class="bg-gray-50 h-full flex-grow h-96">
-                <div class="container py-6 px-8 space-y-2 text-gray-800">
+                <div class="container mx-auto py-6 px-8 space-y-2 text-gray-800">
                   <?=p($this->children)?>
                 </div>
               </div>
