@@ -26,3 +26,28 @@ Theme::overrideDefaults([
 ### Extract the Form Validation Piece
 
 ### Extract the Templating
+
+
+## Development Notes
+
+Form Structure Usages
+
+- Display
+  - View (read) / Edit (write) / List (tables)
+  - This is html based display types: Color Field, Json Field, Text, Text Area, Array fields
+  - Fields can be used in any/all of the views, so those should be editable
+  - There needs to be different representations display representations for tables, forms (edit), and read only viewing.
+  - Likely would want support for nested structures, and maybe groups
+- Validation
+  - When submitting a form, there should be enough information on the field to allow for validation on the server, and maybe even
+    frontend
+- We only should need to describe one structure for a CRUD and that should be it, users just need to describe the structure
+- Eventually, we'll want the ability to specify DTO's that contain attribute information which mimic the field type data
+- Repository Services
+  - Fetch data from Id
+  - Search data (later)
+  - save data
+    - This will just save the raw array data, there can be a mapping layer beneath that is responsible for converting the array into a format to be saved.
+- Data Access 
+  - We'll need a simple data access interface that will wrap the data entries and provide a simple get interface for reading
+  - The repositories will need to return entries of the data access objects

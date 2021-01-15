@@ -33,6 +33,7 @@ final class OneColumnLayout
                 Nav::Item('Home', path('home')),
                 Nav::Item('Crud', path('crud_list')),
                 Nav::Item('Crud Create', path('crud_create')),
+                Nav::Item('Size Scales', path('size_scales'))
               ]))?>
               <div class="bg-gray-50 h-full flex-grow h-96">
                 <div class="container mx-auto py-6 px-8 space-y-2 text-gray-800">

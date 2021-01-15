@@ -24,7 +24,7 @@ final class CrudCreatePage
     public function __invoke(): void {
         $title = $this->form->name() . ' | Create';
         echo p((new OneColumnLayout(function() use ($title) {
-        ?>  <h1 class="font-medium text-2xl text-gray-900 mb-4"><?=$title?></h1>
+        ?>  <?=p(Typography::PageTitle($title))?>
             <?=p(self::FlashMessages())?>
             <form class="grid grid-cols-4 gap-4" method="POST">
               <?php foreach ($this->form->fields() as $field): ?>

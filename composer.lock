@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5368a4498e9531c14bac1017c3fbd766",
+    "content-hash": "6e4d916d13c4048b39f18f29f89fdb2e",
     "packages": [
         {
             "name": "krak/adt",
@@ -48,6 +48,61 @@
                 "functional"
             ],
             "time": "2019-09-15T04:37:08+00:00"
+        },
+        {
+            "name": "krak/schema",
+            "version": "v0.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/krakphp/schema.git",
+                "reference": "07158c77442c10745a6ab11a0a904608d3adbcc9"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/krakphp/schema/zipball/07158c77442c10745a6ab11a0a904608d3adbcc9",
+                "reference": "07158c77442c10745a6ab11a0a904608d3adbcc9",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^9.0",
+                "symfony/config": "^5.0",
+                "symfony/var-dumper": "^5.0",
+                "symfony/yaml": "^5.0",
+                "vimeo/psalm": "^3.9"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Krak\\Schema\\": "src"
+                },
+                "files": [
+                    "src/schema.php",
+                    "src/ProcessSchema/SymfonyConfig/process-schema.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "RJ Garcia",
+                    "email": "ragboyjr@icloud.com"
+                }
+            ],
+            "description": "Declarative API for Defining and Processing Schemas",
+            "keywords": [
+                "config",
+                "declarative",
+                "functional",
+                "schema",
+                "symfony",
+                "validation"
+            ],
+            "time": "2020-04-13T18:54:47+00:00"
         }
     ],
     "packages-dev": [

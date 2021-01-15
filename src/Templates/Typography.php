@@ -7,6 +7,12 @@ use function League\Plates\p;
 
 final class Typography
 {
+    public static function PageTitle(string $title) {
+        return function() use ($title) {
+            ?> <h1 class="font-medium text-2xl text-gray-900 mb-4"><?=$title?></h1> <?php
+        };
+    }
+
     public static function textLink($content, string $href, string $classes = ''): callable {
         return function() use ($content, $href, $classes) {
             ?> <a class="text-blue-400 hover:text-blue-500 underline <?=$classes?>" href="<?=$href?>"><?=p($content)?></a> <?php

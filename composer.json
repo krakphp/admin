@@ -6,11 +6,12 @@
       "Krak\\Admin\\": "src",
       "League\\Plates\\": "plates_src"
     },
-    "files": ["plates_src/plates.php", "plates_src/Bridge/Symfony/functions.php"]
+    "files": ["plates_src/plates.php", "plates_src/html.php", "plates_src/Bridge/Symfony/functions.php"]
   },
   "require": {
     "php": "^7.2",
-    "krak/adt": "^0.1.1"
+    "krak/adt": "^0.1.1",
+    "krak/schema": "^0.2.0"
   },
   "require-dev": {
     "krak/struct-gen": "^0.1.1",
