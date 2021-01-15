@@ -45,17 +45,44 @@ final class ScopedRegistry
     }
 }
 
-/** @param callable|string|object $component */
-function p($component, string $scope = ScopedRegistry::SCOPE_DEFAULT) {
-    if (is_string($component) || (is_object($component) && method_exists($component, '__toString'))) {
-        return (string) $component; // this check is just for API flexibility when you want to accept a string or callable
+abstract class Component {
+    abstract public function __invoke(): void;
+
+    public function __toString() {
+        return render($this);
+    }
+}
+
+final class FunctionComponent extends Component {
+    private $fn;
+
+    public function __construct(callable $fn) {
+        $this->fn = $fn;
     }
 
+    public function __invoke(): void {
+        ($this->fn)();
+    }
+}
+
+final class EchoComponent extends Component {
+    private $value;
+
+    public function __construct($value) {
+        $this->value = $value;
+    }
+
+    public function __invoke(): void {
+        echo $this->value;
+    }
+}
+
+function render(callable $component) {
     $cur_level = ob_get_level();
 
     try {
         ob_start();
-        $component(ScopedRegistry::self($scope));
+        $component();
         return ob_get_clean();
     } catch (\Throwable $e) {}
 
@@ -65,4 +92,18 @@ function p($component, string $scope = ScopedRegistry::SCOPE_DEFAULT) {
     }
 
     throw $e;
+}
+
+function p($component) {
+    if ($component instanceof Component) {
+        return $component;
+    }
+    if (is_string($component) || (is_object($component) && method_exists($component, '__toString'))) {
+        return new EchoComponent($component);
+    }
+    if (is_callable($component)) {
+        return new FunctionComponent($component);
+    }
+
+    throw new \RuntimeException('Could not convert component into an instance of Component.');
 }

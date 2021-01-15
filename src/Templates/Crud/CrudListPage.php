@@ -5,33 +5,34 @@ namespace Krak\Admin\Templates\Crud;
 use Krak\Admin\Templates\Layout\OneColumnLayout;
 use Krak\Admin\Templates\Table;
 use Krak\Admin\Templates\Typography;
+use League\Plates\Component;
 use function League\Plates\p;
 
-final class CrudListPage
+final class CrudListPage extends Component
 {
-    public function __invoke() {
-        echo p((new OneColumnLayout(function() {
+    public function __invoke(): void {
+        echo (new OneColumnLayout(function() {
         ?>  <h1 class="font-medium text-2xl">Order Listing</h1>
             <div class="flex justify-between">
                 <div></div>
                 <div class="flex space-x-2">
-                    <?=p(Typography::Button('Add', 'success'))?>
-                    <?=p(Typography::Button('Export'))?>
+                    <?=Typography::Button('Add', 'success')?>
+                    <?=Typography::Button('Export')?>
                 </div>
             </div>
 
-            <?=p(Table::Wrapper(function() {
+            <?=Table::Wrapper(function() {
                 ?>  <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                     <table class="min-w-full divide-y divide-pink-200">
                         <thead>
                         <tr>
-                            <?=p(Table::Th('Name'))?>
-                            <?=p(Table::Th('Title'))?>
-                            <?=p(Table::Th('Status'))?>
-                            <?=p(Table::Th('Role'))?>
-                            <?=p(Table::Th(function() {
+                            <?=Table::Th('Name')?>
+                            <?=Table::Th('Title')?>
+                            <?=Table::Th('Status')?>
+                            <?=Table::Th('Role')?>
+                            <?=Table::Th(function() {
                                 ?> <span class="sr-only">Edit</span> <?php
-                            }))?>
+                            })?>
                         </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-gray-200">
@@ -72,7 +73,7 @@ final class CrudListPage
                         </tbody>
                     </table>
                 </div> <?php
-            }))?> <?php
-        })));
+            })?> <?php
+        }));
     }
 }

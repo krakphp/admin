@@ -86,5 +86,11 @@ final class HtmlTest extends \PHPUnit\Framework\TestCase
             ],
             'expectedRender' => 'class="mb-1"'
         ];
+        yield 'filters out empty class name sets' => [
+            'attrMaps' => [
+                ['class' => classNames([], 'mx-1', '', 'mt-1')],
+            ],
+            'expectedRender' => 'class="mx-1 mt-1"'
+        ];
     }
 }

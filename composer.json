@@ -6,7 +6,11 @@
       "Krak\\Admin\\": "src",
       "League\\Plates\\": "plates_src"
     },
-    "files": ["plates_src/plates.php", "plates_src/html.php", "plates_src/Bridge/Symfony/functions.php"]
+    "files": [
+      "plates_src/plates.php",
+      "plates_src/html.php",
+      "plates_src/Bridge/Symfony/functions.php"
+    ]
   },
   "require": {
     "php": "^7.2",
