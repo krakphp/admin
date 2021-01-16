@@ -3,8 +3,11 @@
 namespace Krak\Admin\Templates\Layout;
 
 use League\Plates\Component;
+use League\Plates\ComponentContext;
+use League\Plates\Portal;
 use function League\Plates\attrs;
 use function League\Plates\Bridge\Symfony\path;
+use function League\Plates\context;
 use function League\Plates\p;
 
 final class OneColumnLayout extends Component
@@ -19,6 +22,8 @@ final class OneColumnLayout extends Component
     }
 
     public function __invoke(): void {
+      $children = (string) $this->children; // ensure that any of the global buffers get filled.
+      $nav = $this->nav();
     ?>  <!DOCTYPE html>
         <html lang="en" class="h-full">
             <head>
@@ -30,15 +35,10 @@ final class OneColumnLayout extends Component
                 <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.7.3/dist/alpine.min.js" defer></script>
             </head>
             <body class="flex flex-col sm:flex-row h-full items-stretch">
-              <?=new Nav([
-                Nav::Item('Home', path('home')),
-                Nav::Item('Crud', path('crud_list')),
-                Nav::Item('Crud Create', path('crud_create')),
-                Nav::Item('Dynamic Form', path('size_scales'))
-              ])?>
+              <?=$nav?>
               <div class="bg-gray-50 h-full flex-grow h-96">
                 <div class="container mx-auto py-6 px-8 space-y-2 text-gray-800">
-                  <?=$this->children?>
+                  <?=$children?>
                 </div>
               </div>
             </body>
@@ -52,5 +52,14 @@ final class OneColumnLayout extends Component
     /** @param string[] $styleSheets */
     public function styleSheets(array $styleSheets): self {
         $this->styleSheets = $styleSheets; return $this;
+    }
+
+    private function nav(): string {
+        return (string) new Nav([
+            Nav::Item('Home', path('home')),
+            Nav::Item('Crud', path('crud_list')),
+            Nav::Item('Crud Create', path('crud_create')),
+            Nav::Item('Dynamic Form', path('size_scales'))
+        ]);
     }
 }

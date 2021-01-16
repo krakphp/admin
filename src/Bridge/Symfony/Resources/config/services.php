@@ -2,8 +2,8 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use Krak\Admin\Bridge\Symfony\EventSubscriber\InitPlatesRegistryOnKernelRequest;
 use Krak\Admin\Form\ConvertFieldToHtmlElement;
+use Krak\Admin\Provider\ProvideAdminContext;
 
 return static function(ContainerConfigurator $configurator) {
     $configurator
@@ -13,6 +13,6 @@ return static function(ContainerConfigurator $configurator) {
             ->autowire()
             ->autoconfigure()
         ->set(ConvertFieldToHtmlElement::class, ConvertFieldToHtmlElement\StaticMappingConvertFieldToHtmlElement::class)
-        ->set(InitPlatesRegistryOnKernelRequest::class)
+        ->set(ProvideAdminContext::class)
     ;
 };

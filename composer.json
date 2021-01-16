@@ -7,7 +7,7 @@
       "League\\Plates\\": "plates_src"
     },
     "files": [
-      "plates_src/plates.php",
+      "plates_src/components.php",
       "plates_src/html.php",
       "plates_src/Bridge/Symfony/functions.php"
     ]

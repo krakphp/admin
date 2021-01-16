@@ -2,17 +2,26 @@
 
 namespace League\Plates\Bridge\Symfony\Subscriber;
 
+use League\Plates\Component;
+use League\Plates\ComponentContext;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Event\ViewEvent;
 use Symfony\Component\HttpKernel\KernelEvents;
-use function League\Plates\p;
 
 final class RenderPlatesComponentOnKernelView implements EventSubscriberInterface
 {
+    private $context;
+
+    public function __construct(ComponentContext $context) {
+        $this->context = $context;
+    }
+
     public function __invoke(ViewEvent $event) {
-        if (is_callable($event->getControllerResult())) {
-            $event->setResponse(new Response(p($event->getControllerResult())));
+        if ($event->getControllerResult() instanceof Component || is_callable($event->getControllerResult())) {
+            $event->setResponse(new Response(
+                $this->context->render($event->getControllerResult())
+            ));
         }
     }
 
