@@ -123,11 +123,22 @@ function p($component) {
     if ($component instanceof Component) {
         return $component;
     }
-    if (is_string($component) || (is_object($component) && method_exists($component, '__toString'))) {
+    $canBeEchoed = is_string($component)
+        || is_int($component)
+        || is_null($component)
+        || (is_object($component) && method_exists($component, '__toString'));
+    if ($canBeEchoed) {
         return new EchoComponent($component);
     }
     if (is_callable($component)) {
         return new FunctionComponent($component);
+    }
+    if (is_array($component)) {
+        return new FunctionComponent(function() use ($component) {
+            foreach ($component as $c) {
+                echo p($c);
+            }
+        });
     }
 
     throw new \RuntimeException('Could not convert component into an instance of Component.');

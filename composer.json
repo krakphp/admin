@@ -3,13 +3,15 @@
   "description": "Administration package to generate highly functional, customizable, and easy to use admins.",
   "autoload": {
     "psr-4": {
+      "Demo\\App\\": "demo/src",
       "Krak\\Admin\\": "src",
       "League\\Plates\\": "plates_src"
     },
     "files": [
       "plates_src/components.php",
       "plates_src/html.php",
-      "plates_src/Bridge/Symfony/functions.php"
+      "plates_src/Bridge/Symfony/functions.php",
+      "src/Templates/Typography/components.php"
     ]
   },
   "require": {
@@ -18,13 +20,21 @@
     "krak/schema": "^0.2.0"
   },
   "require-dev": {
+    "doctrine/collections": "^1.6",
+    "doctrine/doctrine-bundle": "^2.2",
+    "doctrine/orm": "^2.8",
+    "krak/fn": "^1.2",
     "krak/struct-gen": "^0.1.1",
     "phpunit/phpunit": "^9.3",
     "symfony/asset": "^5.1",
+    "symfony/console": "^5.2",
     "symfony/debug-bundle": "^5.1",
     "symfony/form": "^5.1",
     "symfony/framework-bundle": "^5.1",
     "symfony/translation": "^5.1",
     "symfony/var-dumper": "^5.1"
+  },
+  "scripts": {
+    "test": "phpunit --testdox --colors=always"
   }
 }

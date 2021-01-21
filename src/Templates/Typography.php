@@ -2,21 +2,19 @@
 
 namespace Krak\Admin\Templates;
 
+use function Krak\Admin\Templates\Typography\PageTitle;
+use function Krak\Admin\Templates\Typography\TextLink;
 use function League\Plates\attrs;
 use function League\Plates\p;
 
 final class Typography
 {
     public static function PageTitle(string $title) {
-        return p(function() use ($title) {
-            ?> <h1 class="font-medium text-2xl text-gray-900 mb-4"><?=$title?></h1> <?php
-        });
+        return PageTitle($title);
     }
 
     public static function textLink($content, string $href, string $classes = ''): callable {
-        return p(function() use ($content, $href, $classes) {
-            ?> <a class="text-blue-400 hover:text-blue-500 underline <?=$classes?>" href="<?=$href?>"><?=$content?></a> <?php
-        });
+        return TextLink($content, $href, ['class' => $classes]);
     }
 
     public static function buttonSuccess($content, $attrs = []) {

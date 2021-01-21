@@ -14,6 +14,8 @@ final class ComponentsTest extends \PHPUnit\Framework\TestCase
 
     public function provide_possible_component_types() {
         yield 'string' => ['a', 'a'];
+        yield 'null' => [null, ''];
+        yield 'arrays' => [['a', ['b', 'c']], 'abc'];
         yield 'callable' => [function() { echo 'a'; }, 'a'];
         yield '__toString' => [new class() { public function __toString() { return 'a'; }}, 'a'];
         yield 'Component' => [new class() extends Component { public function __invoke(): void { echo 'a'; }}, 'a'];

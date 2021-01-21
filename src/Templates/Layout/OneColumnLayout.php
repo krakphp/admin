@@ -41,6 +41,7 @@ final class OneColumnLayout extends Component
                   <?=$children?>
                 </div>
               </div>
+              <?=context(Portal::class, 'modals')?>
             </body>
         </html><?php
     }
@@ -59,7 +60,8 @@ final class OneColumnLayout extends Component
             Nav::Item('Home', path('home')),
             Nav::Item('Crud', path('crud_list')),
             Nav::Item('Crud Create', path('crud_create')),
-            Nav::Item('Dynamic Form', path('size_scales'))
+            Nav::Item('Dynamic Form', path('size_scales')),
+            Nav::Item('Size Scales', path('catalog_size_scale_admin_list')),
         ]);
     }
 }
