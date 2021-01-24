@@ -8,6 +8,7 @@ use Krak\Admin\Templates\Table;
 use League\Plates\Component;
 use function Krak\Admin\Templates\Typography\PageTitle;
 use function Krak\Admin\Templates\Typography\TextLink;
+use function League\Plates\Bridge\Symfony\path;
 use function League\Plates\p;
 
 final class SizeScaleListPage extends Component
@@ -35,9 +36,9 @@ final class SizeScaleListPage extends Component
                 Table::Td($sizeScale->id()),
                 Table::Td($sizeScale->name()),
                 Table::Td($sizeScale->status()),
-                Table::Td(function() {
+                Table::Td(function() use ($sizeScale) {
                   ?><div class="space-x-2 text-right"><?=p([
-                    TextLink('View', '#'),
+                    TextLink('View', path('catalog_size_scale_admin_view', ['id' => $sizeScale->id()])),
                     TextLink('Edit', '#'),
                   ])?></div><?php
                 })

@@ -21,25 +21,37 @@ final class ComponentContext
         throw new \RuntimeException('No component contexts have been rendered, cannot access global context.');
     }
 
+    /** check if item is in context regardless if context is initialized */
+    public static function safeHas(string $id, ?string $alt = null): bool {
+        return self::$instance !== null && self::$instance->has($id, $alt);
+    }
+
     public function add(string $id, callable $factory, ?string $alt = null): self {
-        $id = $this->id($id, $alt);
+        $id = self::id($id, $alt);
         $this->factories[$id] = $factory;
         unset($this->statics[$id]);
         return $this;
     }
 
     public function addStatic(string $id, $value, ?string $alt = null): self {
-        $id = $this->id($id, $alt);
+        $id = self::id($id, $alt);
         $this->statics[$id] = $value;
         unset($this->factories[$id]);
         return $this;
     }
 
+    public function has(string $id, ?string $alt = null): bool {
+        $id = self::id($id, $alt);
+        return array_key_exists($id, $this->factories) || array_key_exists($id, $this->statics);
+    }
+
     public function get(string $id, ?string $alt = null) {
-        $id = $this->id($id, $alt);
-        if (!array_key_exists($id, $this->factories) && !array_key_exists($id, $this->statics)) {
-            throw new \RuntimeException("Entry $id not found in ComponentContext.");
+        if (!$this->has($id, $alt)) {
+            $id = self::id($id, $alt);
+            throw new \RuntimeException("Entry {$id} not found in ComponentContext.");
         }
+
+        $id = self::id($id, $alt);
 
         if (array_key_exists($id, $this->cachedFactories)) {
             return $this->cachedFactories[$id];
@@ -51,7 +63,7 @@ final class ComponentContext
         return $this->statics[$id];
     }
 
-    private function id(string $id, ?string $alt = null): string {
+    private static function id(string $id, ?string $alt = null): string {
         return $alt === null ? $id : $id . '.' . $alt;
     }
 
@@ -68,6 +80,10 @@ final class ComponentContext
 
 function context(string $id, ?string $alt = null) {
     return ComponentContext::self()->get($id, $alt);
+}
+
+function contextHas(string $id, ?string $alt = null): bool {
+    return ComponentContext::safeHas($id, $alt);
 }
 
 abstract class Component {
@@ -92,13 +108,24 @@ final class FunctionComponent extends Component {
 
 final class EchoComponent extends Component {
     private $value;
+    private $escape = true;
 
     public function __construct($value) {
         $this->value = $value;
     }
 
+    public function raw(): self {
+        $this->escape = false;
+        return $this;
+    }
+
+    public function escape(): self {
+        $this->escape = true;
+        return $this;
+    }
+
     public function __invoke(): void {
-        echo $this->value;
+        echo ($this->escape ? escape($this->value) : $this->value);
     }
 }
 
@@ -119,16 +146,20 @@ function render(callable $component) {
     throw $e;
 }
 
+function raw(string $component): EchoComponent {
+    return (new EchoComponent($component))->raw();
+}
+
 function p($component) {
     if ($component instanceof Component) {
         return $component;
     }
-    $canBeEchoed = is_string($component)
-        || is_int($component)
-        || is_null($component)
-        || (is_object($component) && method_exists($component, '__toString'));
-    if ($canBeEchoed) {
+
+    if (is_string($component) || (is_object($component) && method_exists($component, '__toString'))) {
         return new EchoComponent($component);
+    }
+    if (is_int($component) || is_null($component)) {
+        return (new EchoComponent($component))->raw();
     }
     if (is_callable($component)) {
         return new FunctionComponent($component);

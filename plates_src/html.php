@@ -2,8 +2,40 @@
 
 namespace League\Plates;
 
-function e(string $string, $flags = ENT_COMPAT | ENT_HTML401, string $encoding = 'UTF-8', bool $doubleEncode = true): string {
-    return htmlspecialchars($string, $flags, $encoding, $doubleEncode);
+function escape(string $string, $flags = ENT_COMPAT | ENT_HTML401, string $encoding = 'UTF-8', bool $doubleEncode = true): string {
+    $escape = contextHas('plates.escape') ? context('plates.escape') : 'htmlspecialchars';
+    return $escape($string, $flags, $encoding, $doubleEncode);
+}
+
+final class HtmlComponent extends Component
+{
+    private $nodeName;
+    private $children;
+    private $attributes;
+
+    public function __construct(string $nodeName, $children, ...$attributes) {
+        $this->nodeName = $nodeName;
+        $this->children = $children;
+        $this->attributes = $attributes;
+    }
+
+    public function __invoke(): void {
+        if ($this->children === null) {
+            printf('<%s %s/>', $this->nodeName, attrs(...$this->attributes));
+        } else {
+            printf('<%s %s>%s</%s>', $this->nodeName, attrs(...$this->attributes), p($this->children), $this->nodeName);
+        }
+    }
+
+    public function nodeName(string $nodeName): self {
+        $self = clone $this;
+        $self->nodeName = $nodeName;
+        return $self;
+    }
+}
+
+function h(string $nodeName, $children = null, ...$attributes): HtmlComponent {
+    return new HtmlComponent($nodeName, $children, ...$attributes);
 }
 
 /**

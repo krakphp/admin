@@ -3,7 +3,7 @@
 namespace League\Plates\Bridge\AlpineJs;
 
 use function League\Plates\attrs;
-use function League\Plates\e;
+use function League\Plates\escape;
 use function League\Plates\p;
 
 abstract class AlpineJs
@@ -17,6 +17,6 @@ abstract class AlpineJs
     }
 
     public static function data(array $data): string {
-        return e(json_encode($data));
+        return escape(json_encode($data));
     }
 }

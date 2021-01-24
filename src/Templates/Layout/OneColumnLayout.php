@@ -18,16 +18,16 @@ final class OneColumnLayout extends Component
     private $children;
 
     public function __construct($children) {
-        $this->children = p($children);
+        $this->children = $children;
     }
 
     public function __invoke(): void {
-      $children = (string) $this->children; // ensure that any of the global buffers get filled.
+      $children = (string) p($this->children); // ensure that any of the global buffers get filled.
       $nav = $this->nav();
     ?>  <!DOCTYPE html>
         <html lang="en" class="h-full">
             <head>
-                <title><?=$this->title?></title>
+                <title><?=p($this->title)?></title>
                 <link rel="stylesheet" type="text/css" href="/css/admin.css" />
                 <?php foreach ($this->styleSheets as $styleSheet): ?>
                 <link rel="stylesheet" type="text/css" href="<?=$styleSheet?>" />
@@ -37,7 +37,7 @@ final class OneColumnLayout extends Component
             <body class="flex flex-col sm:flex-row h-full items-stretch">
               <?=$nav?>
               <div class="bg-gray-50 h-full flex-grow h-96">
-                <div class="container mx-auto py-6 px-8 space-y-2 text-gray-800">
+                <div class="container mx-auto py-6 px-8 text-gray-800">
                   <?=$children?>
                 </div>
               </div>
