@@ -2,11 +2,11 @@
 
 namespace Demo\App\Catalog\App;
 
-use Demo\App\Catalog\Domain\CreateSizeScale;
 use Demo\App\Catalog\Domain\SizeScale;
 use Demo\App\Catalog\Domain\SizeScaleRepository;
+use Demo\App\Catalog\Domain\UpdateSizeScale;
 
-final class HandleCreateSizeScale
+final class HandleUpdateSizeScale
 {
     private $sizeScaleRepo;
 
@@ -14,8 +14,9 @@ final class HandleCreateSizeScale
         $this->sizeScaleRepo = $sizeScaleRepo;
     }
 
-    public function __invoke(CreateSizeScale $command): SizeScale {
-        $sizeScale = SizeScale::create($command);
+    public function __invoke(UpdateSizeScale $command): SizeScale {
+        $sizeScale = $this->sizeScaleRepo->get($command->sizeScaleId());
+        $sizeScale->updateFromCommand($command);
         $this->sizeScaleRepo->save($sizeScale);
         return $sizeScale;
     }

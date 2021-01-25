@@ -5,6 +5,7 @@ namespace Krak\Admin\Templates\Layout;
 use League\Plates\Component;
 use League\Plates\ComponentContext;
 use League\Plates\Portal;
+use function Krak\Admin\Templates\Typography\PageTitle;
 use function League\Plates\attrs;
 use function League\Plates\Bridge\Symfony\path;
 use function League\Plates\context;
@@ -13,6 +14,7 @@ use function League\Plates\p;
 final class OneColumnLayout extends Component
 {
     private $title = 'Admin';
+    private $pageTitle = null;
     /** @var string[] */
     private $styleSheets = [];
     private $children;
@@ -38,6 +40,7 @@ final class OneColumnLayout extends Component
               <?=$nav?>
               <div class="bg-gray-50 h-full flex-grow h-96">
                 <div class="container mx-auto py-6 px-8 text-gray-800">
+                  <?=$this->pageTitle ? PageTitle(p($this->pageTitle)) : null?>
                   <?=$children?>
                 </div>
               </div>
@@ -48,6 +51,10 @@ final class OneColumnLayout extends Component
 
     public function title(string $title): self {
         $this->title = $title; return $this;
+    }
+
+    public function titleAndPageTitle(string $title): self {
+      $this->title = $title; $this->pageTitle = $title; return $this;
     }
 
     /** @param string[] $styleSheets */

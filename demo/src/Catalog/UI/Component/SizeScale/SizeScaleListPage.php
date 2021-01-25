@@ -52,7 +52,7 @@ final class SizeScaleListPage extends Component
                 Table::Td($sizeScale->status()),
                 Table::Td(h('div', [
                     TextLink('View', path('catalog_size_scale_admin_view', ['id' => $sizeScale->id()])),
-                    TextLink('Edit', '#'),
+                    TextLink('Edit', path('catalog_size_scale_admin_edit', ['id' => $sizeScale->id()])),
                     self::FormLink('Delete', path('catalog_size_scale_admin_delete', ['id' => $sizeScale->id()]), 'delete'),
 //                    TextLink('Delete', '#', [
 //                        'class' => classNames('text-red-400 hover:text-red-500', ['text-blue-400' => false, 'hover:text-blue-500' => false])

@@ -56,6 +56,10 @@ class SizeScale
         }
     }
 
+    public function updateFromCommand(UpdateSizeScale $command): void {
+        $this->update($command->name(), []);
+    }
+
     public function update(string $name, array $sizes): void {
         if (!$this->status->isDraft()) {
             throw new \RuntimeException('Can only update size scales in draft state.');
@@ -65,7 +69,7 @@ class SizeScale
 
 
         /** @var SizeScaleSize[] $sizeEntitiesBySize */
-        $sizeEntitiesBySize = f\arrayReindex(c\method('size'), $this->sizes);
+        $sizeEntitiesBySize = f\arrayReindex(c\method('size'), $this->sizes ?? []);
 
         // add new sizes
         foreach ($sizes as $size) {
