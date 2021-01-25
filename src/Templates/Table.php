@@ -2,13 +2,15 @@
 
 namespace Krak\Admin\Templates;
 
+use function League\Plates\attrs;
+use function League\Plates\h;
 use function League\Plates\p;
 
 final class Table
 {
-    public static function Wrapper($children) {
-        return p(function() use ($children) {
-        ?>  <div class="flex flex-col">
+    public static function Wrapper($children, ...$attrs) {
+        return p(function() use ($children, $attrs) {
+        ?>  <div <?=attrs(['class' => "flex flex-col"], ...$attrs)?>>
                 <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                     <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
                         <?=p($children)?>
@@ -18,8 +20,8 @@ final class Table
         });
     }
 
-    public static function WrappedTable($children) {
-        return self::Wrapper(self::Table($children));
+    public static function WrappedTable($children, ...$attrs) {
+        return self::Wrapper(self::Table($children), ...$attrs);
     }
 
     public static function Table($children) {
@@ -40,29 +42,22 @@ final class Table
         });
     }
 
-    public static function Tbody($children) {
-        return p(function() use ($children) {
-          ?> <tbody class="bg-white divide-y divide-gray-200"><?=p($children)?></tbody> <?php
-        });
+    public static function Tbody($children, ...$attrs) {
+        return h('tbody', $children, ['class' => 'bg-white divide-y divide-gray-200'], ...$attrs);
     }
 
-    public static function Th($children) {
-        return p(function() use ($children) {
-            ?>  <th scope="col" class="px-6 py-3 bg-gray-50 text-left text-xs font-medium text-pink-500 uppercase tracking-wider">
-                <?=p($children)?>
-            </th> <?php
-        });
+    public static function Th($children, ...$attrs) {
+        return h('th', $children, [
+            'class' => 'px-6 py-3 bg-gray-50 text-left text-xs font-medium text-pink-500 uppercase tracking-wider',
+            'scope' => 'col'
+        ], ...$attrs);
     }
 
-    public static function Tr($children) {
-        return p(function() use ($children) { ?> <tr><?=p($children)?></tr> <?php });
+    public static function Tr($children, ...$attrs) {
+        return h('tr', $children, ...$attrs);
     }
 
-    public static function Td($children) {
-        return p(function() use ($children) {
-            ?>  <td class="px-6 py-4 whitespace-nowrap">
-                <?=p($children)?>
-            </td> <?php
-        });
+    public static function Td($children, ...$attrs) {
+        return h('td', $children, ['class' => 'px-6 py-4 whitespace-nowrap'], ...$attrs);
     }
 }

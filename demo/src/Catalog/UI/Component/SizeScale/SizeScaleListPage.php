@@ -9,6 +9,7 @@ use League\Plates\Component;
 use function Krak\Admin\Templates\Typography\PageTitle;
 use function Krak\Admin\Templates\Typography\TextLink;
 use function League\Plates\Bridge\Symfony\path;
+use function League\Plates\h;
 use function League\Plates\p;
 
 final class SizeScaleListPage extends Component
@@ -31,21 +32,23 @@ final class SizeScaleListPage extends Component
               Table::Th('Status'),
               Table::Th(function() { ?> <span class="sr-only">Edit</span> <?php }),
             ]),
-            Table::Tbody(array_map(function(SizeScale $sizeScale) {
-              return Table::Tr([
-                Table::Td($sizeScale->id()),
-                Table::Td($sizeScale->name()),
-                Table::Td($sizeScale->status()),
-                Table::Td(function() use ($sizeScale) {
-                  ?><div class="space-x-2 text-right"><?=p([
-                    TextLink('View', path('catalog_size_scale_admin_view', ['id' => $sizeScale->id()])),
-                    TextLink('Edit', '#'),
-                  ])?></div><?php
-                })
-              ]);
-            }, $this->sizeScales))
+            Table::Tbody($this->TableBody())
           ])?>
         <?php
         }))->title('Size Scales | List');
+    }
+
+    private function TableBody() {
+        return $this->sizeScales ? array_map(function(SizeScale $sizeScale) {
+            return Table::Tr([
+                Table::Td($sizeScale->id()),
+                Table::Td($sizeScale->name()),
+                Table::Td($sizeScale->status()),
+                Table::Td(h('div', [
+                    TextLink('View', path('catalog_size_scale_admin_view', ['id' => $sizeScale->id()])),
+                    TextLink('Edit', '#'),
+                ], ['class' => 'space-x-2 text-right'])),
+            ]);
+        }, $this->sizeScales) : Table::Tr([Table::Td('No Results', ['class' => 'text-center text-gray-400', 'colspan' => 4])]);
     }
 }
