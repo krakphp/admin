@@ -24,3 +24,19 @@ function Button($title, string $type = 'info', ...$attrs) {
 function ButtonLink($title, string $href, string $type = 'info', ...$attrs) {
     return Button($title, $type, ['href' => $href], $attrs)->nodeName('a');
 }
+
+
+function Card($children, ...$attrs) {
+    return h('div', $children, ['class' => 'bg-white sm:rounded-lg shadow'], ...$attrs);
+}
+
+function DefinitionList($items, ...$attrs) {
+    return h('dl', $items, ['class' => 'divide-y divide-gray-200'], ...$attrs);
+}
+
+function DefinitionListItem($term, $definition) {
+    return h('div', [
+        h('dt', $term, ['class' => 'text-pink-300']),
+        h('dd', $definition, ['class' => 'col-span-2'])
+    ], ['class' => 'grid grid-cols-3 gap-4 p-4']);
+}

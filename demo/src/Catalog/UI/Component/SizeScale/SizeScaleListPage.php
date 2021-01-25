@@ -6,6 +6,7 @@ use Demo\App\Catalog\Domain\SizeScale;
 use Krak\Admin\Templates\Layout\OneColumnLayout;
 use Krak\Admin\Templates\Table;
 use League\Plates\Component;
+use function Krak\Admin\Templates\Typography\ButtonLink;
 use function Krak\Admin\Templates\Typography\PageTitle;
 use function Krak\Admin\Templates\Typography\TextLink;
 use function League\Plates\Bridge\Symfony\path;
@@ -25,6 +26,9 @@ final class SizeScaleListPage extends Component
         echo (new OneColumnLayout(function() {
         ?>
           <?=PageTitle('Size Scales | List')?>
+          <div class="space-x-2 text-right my-4">
+            <?=p([ButtonLink('Add Size Scale', path('catalog_size_scale_admin_create'), 'success')])?>
+          </div>
           <?=Table::WrappedTable([
             Table::Thead([
               Table::Th('Id'),

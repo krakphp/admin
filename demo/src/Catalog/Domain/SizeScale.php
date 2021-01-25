@@ -25,6 +25,10 @@ class SizeScale
         $this->update($name, $sizes);
     }
 
+    public static function create(CreateSizeScale $command): self {
+        return new self($command->name(), []);
+    }
+
     public function id(): ?int {
         return $this->id;
     }

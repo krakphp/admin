@@ -6,6 +6,7 @@ use Krak\Admin\Form\DataAccess;
 use Krak\Admin\Form\Form;
 use Krak\Admin\Templates\Layout\OneColumnLayout;
 use Krak\Admin\Templates\Typography;
+use function Krak\Admin\Templates\Form\FlashMessages;
 use function League\Plates\attrs;
 use function League\Plates\Bridge\Symfony\flashes;
 use function League\Plates\Bridge\Symfony\url;
@@ -25,7 +26,7 @@ final class CrudCreatePage
         $title = $this->form->name() . ' | Create';
         echo (new OneColumnLayout(function() use ($title) {
         ?>  <?=Typography::PageTitle($title)?>
-            <?=self::FlashMessages()?>
+            <?=FlashMessages()?>
             <form class="grid grid-cols-4 gap-4" method="POST">
               <?php foreach ($this->form->fields() as $field): ?>
                 <?=self::FormElement(function() use ($field) {
@@ -45,32 +46,6 @@ final class CrudCreatePage
             <?php
         }))
             ->title($title);
-    }
-
-    private static function FlashMessages() {
-        return p(function() {
-          ?>
-            <?=self::FlashMessagesForType('success', 'bg-green-400', 'text-white', 'hover:text-green-100')?>
-            <?=self::FlashMessagesForType('warning', 'bg-yellow-400', 'text-white', 'hover:text-yellow-100')?>
-            <?=self::FlashMessagesForType('error', 'bg-red-400', 'text-white', 'hover:text-red-100')?>
-          <?php
-        });
-    }
-
-    private static function FlashMessagesForType(string $type, string $mainBg, string $textColor, string $hoverDismissTextColor) {
-        return p(function() use ($type, $mainBg, $textColor, $hoverDismissTextColor) {
-            $messages = flashes()->get($type);
-            if (!$messages) {
-                return;
-            }
-
-        ?>  <div class="rounded-md space-y-1 <?=$textColor?> <?=$mainBg?> p-2 relative" x-data="{ closed: false }" :class="{ hidden: closed }">
-              <?php foreach ($messages as $message): ?>
-                <p><?=$message?></p>
-              <?php endforeach; ?>
-              <p class="text-xs underline <?=$hoverDismissTextColor?> cursor-pointer" @click="closed = true">Dismiss</p>
-            </div> <?php
-        });
     }
 
     private static function FormElement($children, $attrs = []) {

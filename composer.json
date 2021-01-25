@@ -11,7 +11,8 @@
       "plates_src/components.php",
       "plates_src/html.php",
       "plates_src/Bridge/Symfony/functions.php",
-      "src/Templates/Typography/components.php"
+      "src/Templates/Typography/components.php",
+      "src/Templates/Form/components.php"
     ]
   },
   "require": {
