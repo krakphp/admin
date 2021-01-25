@@ -31,7 +31,7 @@ final class SizeScaleViewPage extends Component
                 ]),
                 h('div', [
                     TextLink('Show All', path('catalog_size_scale_admin_list')),
-                    TextLink('Edit', '#'  )
+                    TextLink('Edit', '#')
                 ], ['class' => 'space-x-2 mt-4'])
             ], ['class' => 'mt-4 max-w-lg p-4'])?>
         <?php

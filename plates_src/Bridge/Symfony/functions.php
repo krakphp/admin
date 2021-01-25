@@ -21,3 +21,7 @@ function flashes(): ?FlashBagInterface {
 function session(): ?Session {
     return context(SessionFunctions::class)->session();
 }
+
+function csrfToken(string $id): string {
+    return context(CsrfFunctions::class)->csrfToken($id);
+}

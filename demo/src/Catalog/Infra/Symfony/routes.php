@@ -15,8 +15,8 @@ return static function(RoutingConfigurator $routes) {
        ->add('catalog_size_scale_admin_view', '/size-scales/{id}')
             ->controller([SizeScaleAdminController::class, 'viewAction'])
             ->methods(['GET'])
-        ->add('catalog_size_scale_admin_delete', '/size-scales/{id}/delete')
+        ->add('catalog_size_scale_admin_delete', '/size-scales/{id}')
             ->controller([SizeScaleAdminController::class, 'deleteAction'])
-            ->methods(['POST'])
+            ->methods(['DELETE'])
     ;
 };
