@@ -1,6 +1,6 @@
 <?php
 
-namespace League\Plates\Bridge\Symfony;
+namespace League\Plates\Extension\Symfony;
 
 use Psr\Container\ContainerInterface;
 use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;

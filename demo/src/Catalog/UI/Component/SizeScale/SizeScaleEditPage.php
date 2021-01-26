@@ -12,7 +12,7 @@ use function Krak\Admin\Templates\Form\TextInput;
 use function Krak\Admin\Templates\Typography\Button;
 use function Krak\Admin\Templates\Typography\Card;
 use function Krak\Admin\Templates\Typography\TextLink;
-use function League\Plates\Bridge\Symfony\path;
+use function League\Plates\Extension\Symfony\path;
 use function League\Plates\p;
 use Krak\Fun\{f, c};
 

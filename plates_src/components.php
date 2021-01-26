@@ -164,13 +164,13 @@ function p($component) {
     if (is_callable($component)) {
         return new FunctionComponent($component);
     }
-    if (is_array($component)) {
+    if (is_array($component) || is_iterable($component)) {
         return new FunctionComponent(function() use ($component) {
             foreach ($component as $c) {
                 echo p($c);
             }
         });
     }
-
+    dump($component);
     throw new \RuntimeException('Could not convert component into an instance of Component.');
 }

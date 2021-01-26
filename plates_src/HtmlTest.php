@@ -8,7 +8,7 @@ final class HtmlTest extends \PHPUnit\Framework\TestCase
     public function renders_key_value_pairs_into_string_for_html() {
         $this->assertEquals(
             'a="1" b="1"',
-            attrs(['a' => 1, 'b' => 1])
+            (string) attrs(['a' => 1, 'b' => 1])
         );
     }
 
@@ -16,7 +16,15 @@ final class HtmlTest extends \PHPUnit\Framework\TestCase
     public function merges_and_renders_multiple_attr_maps_preventing_duplicates() {
         $this->assertEquals(
             'a="1" b="2"',
-            attrs(['a' => 1, 'b' => 1], ['b' => 2])
+            (string) attrs(['a' => 1, 'b' => 1], ['b' => 2])
+        );
+    }
+
+    /** @test */
+    public function supports_falsey_and_true_attributes() {
+        $this->assertEquals(
+            'b',
+            (string) attrs(['a' => false, 'c' => null, 'b' => true])
         );
     }
 
@@ -92,5 +100,25 @@ final class HtmlTest extends \PHPUnit\Framework\TestCase
             ],
             'expectedRender' => 'class="mx-1 mt-1"'
         ];
+    }
+
+    /** @test */
+    public function empty_html_components() {
+        $this->assertEquals('<div/>', (string) h('div'));
+    }
+
+    /** @test */
+    public function html_components_with_children() {
+        $this->assertEquals('<div>abc</div>', (string) h('div', 'abc'));
+    }
+
+    /** @test */
+    public function html_components_with_attributes() {
+        $this->assertEquals('<div a="1"/>', (string) h('div', null, ['a' => 1]));
+    }
+
+    /** @test */
+    public function html_components_with_empty_attributes() {
+        $this->assertEquals('<div/>', (string) h('div', null, ['a' => null]));
     }
 }

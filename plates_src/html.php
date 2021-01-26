@@ -20,10 +20,12 @@ final class HtmlComponent extends Component
     }
 
     public function __invoke(): void {
+        $attrs = (string) attrs(...$this->attributes);
+        $attrs = $attrs ? ' ' . $attrs : '';
         if ($this->children === null) {
-            printf('<%s %s/>', $this->nodeName, attrs(...$this->attributes));
+            printf('<%s%s/>', $this->nodeName, $attrs);
         } else {
-            printf('<%s %s>%s</%s>', $this->nodeName, attrs(...$this->attributes), p($this->children), $this->nodeName);
+            printf('<%s%s>%s</%s>', $this->nodeName, $attrs, p($this->children), $this->nodeName);
         }
     }
 
@@ -231,10 +233,10 @@ final class HTMLAttributeSet implements \IteratorAggregate
         }
         $html = '';
         foreach ($attrMap as $key => $value) {
-            if ($value !== null) {
-                $html .= " {$key}=\"$value\"";
-            } else {
+            if ($value === true) {
                 $html .= " {$key}";
+            } else if ($value !== null && $value !== false) {
+                $html .= " {$key}=\"$value\"";
             }
         }
         return ltrim($html);

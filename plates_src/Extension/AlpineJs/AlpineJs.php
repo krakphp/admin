@@ -1,6 +1,6 @@
 <?php
 
-namespace League\Plates\Bridge\AlpineJs;
+namespace League\Plates\Extension\AlpineJs;
 
 use function League\Plates\escape;
 use function League\Plates\h;

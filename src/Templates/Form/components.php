@@ -3,7 +3,7 @@
 namespace Krak\Admin\Templates\Form;
 
 use function League\Plates\attrs;
-use function League\Plates\Bridge\Symfony\flashes;
+use function League\Plates\Extension\Symfony\flashes;
 use function League\Plates\escape;
 use function League\Plates\h;
 use function League\Plates\p;

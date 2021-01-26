@@ -7,7 +7,7 @@ use League\Plates\ComponentContext;
 use League\Plates\Portal;
 use function Krak\Admin\Templates\Typography\PageTitle;
 use function League\Plates\attrs;
-use function League\Plates\Bridge\Symfony\path;
+use function League\Plates\Extension\Symfony\path;
 use function League\Plates\context;
 use function League\Plates\p;
 

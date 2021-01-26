@@ -1,10 +1,10 @@
 <?php
 
-namespace League\Plates\Bridge\Symfony\UI\Provider;
+namespace League\Plates\Extension\Symfony\UI\Provider;
 
-use League\Plates\Bridge\Symfony\CsrfFunctions;
-use League\Plates\Bridge\Symfony\RoutingFunctions;
-use League\Plates\Bridge\Symfony\SessionFunctions;
+use League\Plates\Extension\Symfony\CsrfFunctions;
+use League\Plates\Extension\Symfony\RoutingFunctions;
+use League\Plates\Extension\Symfony\SessionFunctions;
 use League\Plates\ComponentContext;
 use League\Plates\ProvideComponentContext;
 

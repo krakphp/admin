@@ -3,7 +3,7 @@
 namespace Demo\App\Catalog\UI\Component\SizeScale;
 
 use Krak\Admin\Templates\Layout\OneColumnLayout;
-use League\Plates\Bridge\AlpineJs\AlpineJs;
+use League\Plates\Extension\AlpineJs\AlpineJs;
 use League\Plates\Component;
 use League\Plates\Portal;
 use function Krak\Admin\Templates\Form\FormElement;
@@ -17,7 +17,7 @@ use function Krak\Admin\Templates\Typography\DefinitionList;
 use function Krak\Admin\Templates\Typography\DefinitionListItem;
 use function Krak\Admin\Templates\Typography\PageTitle;
 use function Krak\Admin\Templates\Typography\TextLink;
-use function League\Plates\Bridge\Symfony\path;
+use function League\Plates\Extension\Symfony\path;
 use function League\Plates\escape;
 use function League\Plates\h;
 use function League\Plates\p;

@@ -1,6 +1,6 @@
 <?php
 
-namespace League\Plates\Bridge\Symfony\Subscriber;
+namespace League\Plates\Extension\Symfony\Subscriber;
 
 use League\Plates\Component;
 use League\Plates\ComponentContext;

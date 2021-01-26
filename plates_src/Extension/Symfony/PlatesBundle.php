@@ -1,6 +1,6 @@
 <?php
 
-namespace League\Plates\Bridge\Symfony;
+namespace League\Plates\Extension\Symfony;
 
 use League\Plates\ProvideComponentContext;
 use Symfony\Component\Config\FileLocator;

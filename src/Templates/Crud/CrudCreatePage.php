@@ -8,8 +8,8 @@ use Krak\Admin\Templates\Layout\OneColumnLayout;
 use Krak\Admin\Templates\Typography;
 use function Krak\Admin\Templates\Form\FlashMessages;
 use function League\Plates\attrs;
-use function League\Plates\Bridge\Symfony\flashes;
-use function League\Plates\Bridge\Symfony\url;
+use function League\Plates\Extension\Symfony\flashes;
+use function League\Plates\Extension\Symfony\url;
 use function League\Plates\p;
 
 final class CrudCreatePage

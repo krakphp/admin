@@ -7,7 +7,7 @@ use Krak\Admin\Templates\Layout\OneColumnLayout;
 use League\Plates\Component;
 use function Krak\Admin\Templates\Typography\{Button, ButtonLink, Card, DefinitionList, DefinitionListItem, PageTitle,
     TextLink};
-use function League\Plates\Bridge\Symfony\path;
+use function League\Plates\Extension\Symfony\path;
 use function League\Plates\{p, h};
 
 final class SizeScaleViewPage extends Component

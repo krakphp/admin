@@ -25,7 +25,6 @@ function ButtonLink($title, string $href, string $type = 'info', ...$attrs) {
     return Button($title, $type, ['href' => $href], $attrs)->nodeName('a');
 }
 
-
 function Card($children, ...$attrs) {
     return h('div', $children, ['class' => 'bg-white sm:rounded-lg shadow'], ...$attrs);
 }

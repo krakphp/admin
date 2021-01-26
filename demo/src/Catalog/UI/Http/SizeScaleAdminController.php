@@ -2,6 +2,7 @@
 
 namespace Demo\App\Catalog\UI\Http;
 
+use Demo\App\Catalog\UI\ListingQueryParams;
 use Demo\App\Catalog\App\{HandleCreateSizeScale, HandleDeleteSizeScale, HandleUpdateSizeScale};
 use Demo\App\Catalog\Domain\{CreateSizeScale, DeleteSizeScale, SizeScaleRepository, UpdateSizeScale};
 use Demo\App\Catalog\UI\Component\{SizeScale\SizeScaleCreatePage, SizeScale\SizeScaleEditPage,
@@ -27,20 +28,22 @@ final class SizeScaleAdminController extends AbstractController
 
     public function listAction(Request $req) {
         return new SizeScaleListPage(
-            $this->sizeScaleRepo->search($this->criteriaFromSearch($req)),
+            $this->sizeScaleRepo->search($this->criteriaFromListingQueryParams(ListingQueryParams::fromRequest($req))),
             $req->query->get('search')
         );
     }
 
-    private function criteriaFromSearch(Request $req) {
-        $search = $req->query->get('search');
-        if (!$search) {
-            return new Criteria();
-        }
+    private function criteriaFromListingQueryParams(ListingQueryParams $params) {
+        $criteria = Criteria::create()
+            ->setFirstResult($params->pageSize() * ($params->page() - 1))
+            ->setMaxResults($params->pageSize())
+        ;
 
-        return Criteria::create()
-            ->where(Criteria::expr()->contains('name', $search))
-            ->orWhere(Criteria::expr()->eq('status', $search));
+        return $params->search()
+            ? $criteria
+                ->where(Criteria::expr()->contains('name', $params->search()))
+                ->orWhere(Criteria::expr()->eq('status', $params->search()))
+            : $criteria;
     }
 
     public function viewAction($id) {

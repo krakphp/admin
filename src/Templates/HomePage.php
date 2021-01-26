@@ -4,7 +4,7 @@ namespace Krak\Admin\Templates;
 
 use Krak\Admin\Templates\Layout\OneColumnLayout;
 use League\Plates\Component;
-use function League\Plates\Bridge\Symfony\url;
+use function League\Plates\Extension\Symfony\url;
 
 final class HomePage extends Component
 {

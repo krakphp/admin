@@ -1,6 +1,6 @@
 <?php
 
-namespace League\Plates\Bridge\Symfony;
+namespace League\Plates\Extension\Symfony;
 
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 

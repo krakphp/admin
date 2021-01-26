@@ -2,8 +2,10 @@
 
 namespace Demo\App\Catalog\Infra\Persistence;
 
+use Demo\App\Catalog\Domain\ResultSet;
 use Demo\App\Catalog\Domain\SizeScale;
 use Demo\App\Catalog\Domain\SizeScaleRepository;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\Criteria;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -28,8 +30,8 @@ final class DoctrineSizeScaleRepository implements SizeScaleRepository
         return $this->em->find(SizeScale::class, $id);
     }
 
-    public function search(Criteria $criteria): array {
-        return $this->em->getRepository(SizeScale::class)->matching($criteria)->toArray();
+    public function search(Criteria $criteria): Collection {
+        return $this->em->getRepository(SizeScale::class)->matching($criteria);
     }
 
     public function save(SizeScale $sizeScale): void {

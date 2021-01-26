@@ -2,12 +2,12 @@
 
 namespace Symfony\Component\DependencyInjection\Loader\Configurator;
 
-use League\Plates\Bridge\Symfony\CsrfFunctions;
-use League\Plates\Bridge\Symfony\RoutingFunctions;
-use League\Plates\Bridge\Symfony\SessionFunctions;
-use League\Plates\Bridge\Symfony\Subscriber\ProvideComponentContextOnKernelRequest;
-use League\Plates\Bridge\Symfony\Subscriber\RenderPlatesComponentOnKernelView;
-use League\Plates\Bridge\Symfony\UI\Provider\ProvidePlatesFunctions;
+use League\Plates\Extension\Symfony\CsrfFunctions;
+use League\Plates\Extension\Symfony\RoutingFunctions;
+use League\Plates\Extension\Symfony\SessionFunctions;
+use League\Plates\Extension\Symfony\Subscriber\ProvideComponentContextOnKernelRequest;
+use League\Plates\Extension\Symfony\Subscriber\RenderPlatesComponentOnKernelView;
+use League\Plates\Extension\Symfony\UI\Provider\ProvidePlatesFunctions;
 use League\Plates\ComponentContext;
 
 return static function (ContainerConfigurator $configurator) {
