@@ -2,21 +2,12 @@
 
 namespace Demo\App\Catalog\UI\Http;
 
-use Demo\App\Catalog\App\HandleCreateSizeScale;
-use Demo\App\Catalog\App\HandleDeleteSizeScale;
-use Demo\App\Catalog\App\HandleUpdateSizeScale;
-use Demo\App\Catalog\Domain\CreateSizeScale;
-use Demo\App\Catalog\Domain\DeleteSizeScale;
-use Demo\App\Catalog\Domain\SizeScaleRepository;
-use Demo\App\Catalog\Domain\UpdateSizeScale;
-use Demo\App\Catalog\UI\Component\SizeScale\SizeScaleCreatePage;
-use Demo\App\Catalog\UI\Component\SizeScale\SizeScaleEditPage;
-use Demo\App\Catalog\UI\Component\SizeScale\SizeScaleListPage;
-use Demo\App\Catalog\UI\Component\SizeScale\SizeScaleViewPage;
+use Demo\App\Catalog\App\{HandleCreateSizeScale, HandleDeleteSizeScale, HandleUpdateSizeScale};
+use Demo\App\Catalog\Domain\{CreateSizeScale, DeleteSizeScale, SizeScaleRepository, UpdateSizeScale};
+use Demo\App\Catalog\UI\Component\{SizeScale\SizeScaleCreatePage, SizeScale\SizeScaleEditPage,
+    SizeScale\SizeScaleListPage, SizeScale\SizeScaleViewPage};
 use Doctrine\Common\Collections\Criteria;
-use Krak\Admin\Templates\Crud\CrudListPage;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Security\Core\Exception\InvalidCsrfTokenException;
 
@@ -34,8 +25,22 @@ final class SizeScaleAdminController extends AbstractController
         $this->handleUpdateSizeScale = $handleUpdateSizeScale;
     }
 
-    public function listAction() {
-        return new SizeScaleListPage($this->sizeScaleRepo->search(new Criteria()));
+    public function listAction(Request $req) {
+        return new SizeScaleListPage(
+            $this->sizeScaleRepo->search($this->criteriaFromSearch($req)),
+            $req->query->get('search')
+        );
+    }
+
+    private function criteriaFromSearch(Request $req) {
+        $search = $req->query->get('search');
+        if (!$search) {
+            return new Criteria();
+        }
+
+        return Criteria::create()
+            ->where(Criteria::expr()->contains('name', $search))
+            ->orWhere(Criteria::expr()->eq('status', $search));
     }
 
     public function viewAction($id) {
@@ -47,7 +52,7 @@ final class SizeScaleAdminController extends AbstractController
             return new SizeScaleCreatePage();
         }
 
-        $res = ($this->handleCreateSizeScale)(new CreateSizeScale($req->request->get('name')));
+        $res = ($this->handleCreateSizeScale)(new CreateSizeScale($req->request->get('name'), $req->request->get('sizes')));
         return $this->redirectToRoute('catalog_size_scale_admin_view', ['id' => $res->id()]);
     }
 
@@ -57,7 +62,11 @@ final class SizeScaleAdminController extends AbstractController
             return new SizeScaleEditPage($sizeScale);
         }
 
-        $res = ($this->handleUpdateSizeScale)(new UpdateSizeScale((int) $id, $req->request->get('name')));
+        $res = ($this->handleUpdateSizeScale)(new UpdateSizeScale(
+            (int) $id,
+            $req->request->get('name'),
+            $req->request->get('sizes')
+        ));
         return $this->redirectToRoute('catalog_size_scale_admin_view', ['id' => $res->id()]);
     }
 

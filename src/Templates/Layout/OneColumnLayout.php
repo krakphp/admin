@@ -44,7 +44,8 @@ final class OneColumnLayout extends Component
                   <?=$children?>
                 </div>
               </div>
-              <?=context(Portal::class, 'modals')?>
+              <?=context(LayoutPortals::class)->modals()?>
+              <?=context(LayoutPortals::class)->js()?>
             </body>
         </html><?php
     }

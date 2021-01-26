@@ -12,6 +12,11 @@ final class Portal extends Component
         return $this;
     }
 
+    public function set(string $name, $component): self {
+        $this->components[$name] = $component;
+        return $this;
+    }
+
     public function prepend($component): self {
         array_unshift($this->components, p($component));
         return $this;

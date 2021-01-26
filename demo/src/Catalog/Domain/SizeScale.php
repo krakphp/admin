@@ -26,7 +26,7 @@ class SizeScale
     }
 
     public static function create(CreateSizeScale $command): self {
-        return new self($command->name(), []);
+        return new self($command->name(), $command->sizes());
     }
 
     public function id(): ?int {
@@ -57,7 +57,7 @@ class SizeScale
     }
 
     public function updateFromCommand(UpdateSizeScale $command): void {
-        $this->update($command->name(), []);
+        $this->update($command->name(), $command->sizes());
     }
 
     public function update(string $name, array $sizes): void {

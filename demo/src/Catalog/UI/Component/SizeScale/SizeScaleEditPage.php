@@ -7,12 +7,14 @@ use Krak\Admin\Templates\Layout\OneColumnLayout;
 use League\Plates\Component;
 use function Krak\Admin\Templates\Form\FormElement;
 use function Krak\Admin\Templates\Form\Label;
+use function Krak\Admin\Templates\Form\TagsInput;
 use function Krak\Admin\Templates\Form\TextInput;
 use function Krak\Admin\Templates\Typography\Button;
 use function Krak\Admin\Templates\Typography\Card;
 use function Krak\Admin\Templates\Typography\TextLink;
 use function League\Plates\Bridge\Symfony\path;
 use function League\Plates\p;
+use Krak\Fun\{f, c};
 
 final class SizeScaleEditPage extends Component
 {
@@ -28,9 +30,15 @@ final class SizeScaleEditPage extends Component
             <?=Card(function() {
             ?>
                 <form class="p-4 space-y-4" method="post">
-                    <?=FormElement([
-                        Label('Name'),
-                        TextInput('name', $this->sizeScale->name())
+                    <?=p([
+                        FormElement([
+                            Label('Name'),
+                            TextInput('name', $this->sizeScale->name())
+                        ]),
+                        FormElement([
+                            Label('Sizes'),
+                            TagsInput('sizes[]', PresentedSizeScale::sortedSizes($this->sizeScale))
+                        ]),
                     ])?>
                     <div class="space-x-2">
                         <?=p([

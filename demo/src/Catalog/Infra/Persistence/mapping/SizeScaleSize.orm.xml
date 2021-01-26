@@ -4,14 +4,11 @@
       xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping
                           https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
 
-    <entity name="Demo\App\Catalog\Domain\SizeScale">
+    <entity name="Demo\App\Catalog\Domain\SizeScaleSize">
         <id name="id" type="integer">
             <generator/>
         </id>
-        <field name="name"/>
-        <field name="status" type="size_scale_status"/>
-        <one-to-many field="sizes" target-entity="SizeScaleSize" mapped-by="sizeScale" fetch="EAGER" orphan-removal="true">
-            <cascade><cascade-all/></cascade>
-        </one-to-many>
+        <field name="size"/>
+        <many-to-one field="sizeScale" target-entity="SizeScale"/>
     </entity>
 </doctrine-mapping>

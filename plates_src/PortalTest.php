@@ -36,4 +36,13 @@ final class PortalTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals('', (string) $portal);
     }
+
+    /** @test */
+    public function setting_to_a_portal() {
+        $portal = new Portal();
+
+        $portal->set('a', 'a')->set('a', 'b');
+
+        $this->assertEquals('b', (string) $portal);
+    }
 }

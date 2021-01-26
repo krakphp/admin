@@ -28,6 +28,7 @@ final class SizeScaleViewPage extends Component
                     DefinitionListItem('Id', $this->sizeScale->id()),
                     DefinitionListItem('Name', $this->sizeScale->name()),
                     DefinitionListItem('Status', $this->sizeScale->status()),
+                    DefinitionListItem('Sizes', PresentedSizeScale::csvSizes($this->sizeScale))
                 ]),
                 h('div', [
                     TextLink('Show All', path('catalog_size_scale_admin_list')),

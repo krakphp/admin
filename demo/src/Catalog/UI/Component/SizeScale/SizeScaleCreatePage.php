@@ -3,9 +3,12 @@
 namespace Demo\App\Catalog\UI\Component\SizeScale;
 
 use Krak\Admin\Templates\Layout\OneColumnLayout;
+use League\Plates\Bridge\AlpineJs\AlpineJs;
 use League\Plates\Component;
+use League\Plates\Portal;
 use function Krak\Admin\Templates\Form\FormElement;
 use function Krak\Admin\Templates\Form\Label;
+use function Krak\Admin\Templates\Form\TagsInput;
 use function Krak\Admin\Templates\Form\TextInput;
 use function Krak\Admin\Templates\Typography\Button;
 use function Krak\Admin\Templates\Typography\ButtonLink;
@@ -15,6 +18,8 @@ use function Krak\Admin\Templates\Typography\DefinitionListItem;
 use function Krak\Admin\Templates\Typography\PageTitle;
 use function Krak\Admin\Templates\Typography\TextLink;
 use function League\Plates\Bridge\Symfony\path;
+use function League\Plates\escape;
+use function League\Plates\h;
 use function League\Plates\p;
 
 final class SizeScaleCreatePage extends Component
@@ -28,9 +33,15 @@ final class SizeScaleCreatePage extends Component
             <?=Card(function() {
             ?>
                 <form class="p-4 space-y-4" method="post">
-                    <?=FormElement([
-                        Label('Name'),
-                        TextInput('name')
+                    <?=p([
+                        FormElement([
+                            Label('Name'),
+                            TextInput('name')
+                        ]),
+                        FormElement([
+                            Label('Sizes'),
+                            TagsInput('sizes[]')
+                        ]),
                     ])?>
                     <div class="space-x-2">
                         <?=p([

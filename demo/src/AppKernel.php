@@ -143,7 +143,7 @@ final class AppKernel extends Kernel
 
     public function modalTestPage() {
        return function() {
-            \League\Plates\context(\League\Plates\Portal::class, 'modals')
+            \League\Plates\context(\Krak\Admin\Templates\Layout\LayoutPortals::class)->modals()
                 ->append(new Modal('a', [Modal::Body([Modal::Title('Modal A'), Modal::Copy('This is the modal content.')]), Modal::Footer()]))
             ;
 

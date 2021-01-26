@@ -2,18 +2,13 @@
 
 namespace League\Plates\Bridge\AlpineJs;
 
-use function League\Plates\attrs;
 use function League\Plates\escape;
-use function League\Plates\p;
+use function League\Plates\h;
 
 abstract class AlpineJs
 {
-    public static function Component($data, $children, array $attributes = []) {
-        return p(function() use ($data, $children, $attributes) {
-            ?>  <div <?=attrs(['x-data' => self::data($data)], $attributes)?>>
-                <?=p($children)?>
-            </div> <?php
-        });
+    public static function Component($data, $children, ...$attributes) {
+        return h('div', $children, ['x-data' => self::data($data)], ...$attributes);
     }
 
     public static function data(array $data): string {
