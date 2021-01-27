@@ -22,7 +22,7 @@ function Button($title, string $type = 'info', ...$attrs) {
 }
 
 function ButtonLink($title, string $href, string $type = 'info', ...$attrs) {
-    return Button($title, $type, ['href' => $href], $attrs)->nodeName('a');
+    return Button($title, $type, ['href' => $href, 'class' => 'inline-block'], ...$attrs)->nodeName('a');
 }
 
 function Card($children, ...$attrs) {

@@ -27,9 +27,10 @@ final class SizeScaleAdminController extends AbstractController
     }
 
     public function listAction(Request $req) {
+        $params = ListingQueryParams::fromRequest($req);
         return new SizeScaleListPage(
-            $this->sizeScaleRepo->search($this->criteriaFromListingQueryParams(ListingQueryParams::fromRequest($req))),
-            $req->query->get('search')
+            $this->sizeScaleRepo->search($this->criteriaFromListingQueryParams($params)),
+            $params
         );
     }
 

@@ -35,4 +35,14 @@ final class ListingQueryParams
     public function pageSize(): int {
         return $this->pageSize;
     }
+
+    public function withPage(int $page): self {
+        $self = clone $this;
+        $self->page = $page;
+        return $self;
+    }
+
+    public function toArray(): array {
+        return ['page' => $this->page(), 'pageSize' => $this->pageSize, 'search' => $this->search];
+    }
 }

@@ -7,6 +7,7 @@ use function League\Plates\Extension\Symfony\flashes;
 use function League\Plates\escape;
 use function League\Plates\h;
 use function League\Plates\p;
+use Krak\Fun\{f, c};
 
 function FlashMessages() {
     return p([
@@ -54,6 +55,21 @@ function TextInput(string $name, ?string $value = null, ...$attrs) {
         'type' => 'text',
         'class' => 'focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-gray-300 rounded-md'
     ], ...$attrs);
+}
+
+
+function SelectInput(string $name, iterable $options, ?string $selectedValue = null, ...$attrs) {
+    return h('select', f\map(function($option) use ($selectedValue) {
+        [$value, $label] = is_array($option) ? $option : [$option, $option];
+        return h('option', $label, ['value' => $value, 'selected' => $value == $selectedValue]);
+    }, $options), [
+        'name' => $name,
+        'class' => 'focus:ring-pink-500 focus:border-pink-500 block w-full sm:text-sm border-gray-300 rounded-md'
+    ], ...$attrs);
+}
+
+function HiddenInput(string $name, string $value) {
+    return h('input', null, ['name' => $name, 'value' => $value, 'type' => 'hidden']);
 }
 
 function TagsInput(string $fieldName, array $tags = [], ...$attrs) {
