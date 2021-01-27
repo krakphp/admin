@@ -116,6 +116,13 @@ final class SizeScaleListPage extends Component
         }) : p($children);
     }
 
+    private function SortableHeader(string $title) {
+        return h('span', [
+            h('span', $title),
+            h('span')
+        ]);
+    }
+
     private function Pagination(int $page, int $pageSize, int $maxResults) {
         return Pagination::fromTotalResults($maxResults, $page, $pageSize, function(ItemPage $itemPage) {
             return h(($itemPage->disabled() || $itemPage->selected()) ? 'span' : 'a', $itemPage->title(), [

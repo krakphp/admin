@@ -20,7 +20,7 @@ final class ListingQueryParams
         return new self(
             $req->query->get('search', null),
             $req->query->getInt('page', 1),
-            $req->query->getInt('pageSize', 20)
+            $req->query->getInt('pageSize', 25)
         );
     }
 
