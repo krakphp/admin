@@ -3,6 +3,7 @@
 namespace Krak\Admin\Templates\Layout;
 
 use League\Plates\Component;
+use League\Plates\Extension\Heroicons\OutlineIcon;
 use function League\Plates\p;
 
 final class Nav extends Component
@@ -112,18 +113,10 @@ final class Nav extends Component
     }
 
     private static function MenuIcon() {
-        return p(function() {
-        ?>  <svg class="m-2 cursor-pointer w-10 hover:text-pink-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-            </svg> <?php
-        });
+        return OutlineIcon::Menu(['class' => 'm-2 cursor-pointer w-10 hover:text-pink-300']);
     }
 
     private static function CloseIcon() {
-        return p(function() {
-        ?>  <svg class="m-2 cursor-pointer w-10 hover:text-pink-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-            </svg> <?php
-        });
+        return OutlineIcon::X(['class' => 'm-2 cursor-pointer w-10 hover:text-pink-300']);
     }
 }

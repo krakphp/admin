@@ -1,0 +1,6 @@
+{
+    "require": {
+        "krak/fn": "^1.2",
+        "laminas/laminas-code": "^4.0"
+    }
+}
