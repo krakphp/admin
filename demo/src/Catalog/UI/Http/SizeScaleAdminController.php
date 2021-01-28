@@ -40,6 +40,11 @@ final class SizeScaleAdminController extends AbstractController
             ->setMaxResults($params->pageSize())
         ;
 
+        if ($params->sort()) {
+            $sortTuple = $params->sortTuple();
+            $criteria = $criteria->orderBy([$sortTuple->field() => $sortTuple->dir()]);
+        }
+
         return $params->search()
             ? $criteria
                 ->where(Criteria::expr()->contains('name', $params->search()))

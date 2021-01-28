@@ -4,10 +4,12 @@ namespace Demo\App\Catalog\UI\Component\SizeScale;
 
 use Demo\App\Catalog\Domain\SizeScale;
 use Demo\App\Catalog\UI\ListingQueryParams;
+use Demo\App\Catalog\UI\SortTuple;
 use Doctrine\Common\Collections\Collection;
 use Krak\Admin\Templates\Layout\OneColumnLayout;
 use Krak\Admin\Templates\Table;
 use League\Plates\Component;
+use League\Plates\Extension\Heroicons\OutlineIcon;
 use League\Plates\Extension\Pagination\ItemPage;
 use League\Plates\Extension\Pagination\Pagination;
 use function Krak\Admin\Templates\Form\HiddenInput;
@@ -53,8 +55,9 @@ final class SizeScaleListPage extends Component
                     ['100', 'Per Page: 100'],
                     ['200', 'Per Page: 200'],
                 ], (string) $this->params->pageSize(), ['class' => ['w-full' => null,]]),
-                Button('Submit', 'success', ['type' => 'submit']),
+                Button('Go', 'success', ['type' => 'submit']),
                 HiddenInput('page', $this->params->page()),
+                $this->params->sort() ? HiddenInput('sort', $this->params->sort()) : null,
               ])?>
             </form>
             <div class="space-x-2 text-right">
@@ -63,9 +66,9 @@ final class SizeScaleListPage extends Component
           </div>
           <?=Table::WrappedTable([
             Table::Thead([
-              Table::Th('Id'),
-              Table::Th('Name'),
-              Table::Th('Status'),
+              Table::Th($this->SortableHeader('Id')),
+              Table::Th($this->SortableHeader('Name')),
+              Table::Th($this->SortableHeader('Status')),
               Table::Th('Sizes'),
               Table::Th(h('div', 'Total Results: ' . $totalResults, ['class' => 'text-right'])),
             ]),
@@ -116,10 +119,19 @@ final class SizeScaleListPage extends Component
         }) : p($children);
     }
 
-    private function SortableHeader(string $title) {
-        return h('span', [
+    private function SortableHeader(string $title, ?string $field = null) {
+        $field = $field ?: strtolower($title);
+        $sortTuple = $this->params->sortTuple();
+        $nextSort = $sortTuple->field() === $field ? $sortTuple->cycle() : SortTuple::new($field);
+        $attrsForIcon = ['class' => 'w-4 inline-block align-text-top'];
+        return h('a', [
             h('span', $title),
-            h('span')
+            $sortTuple->field() === $field
+                ? ($sortTuple->isAsc() ? OutlineIcon::ArrowUp($attrsForIcon) : OutlineIcon::ArrowDown($attrsForIcon))
+                : OutlineIcon::SwitchVertical($attrsForIcon)
+        ], [
+            'class' => 'cursor-pointer',
+            'href' => path('catalog_size_scale_admin_list', array_merge($this->params->toArray(), ['sort' => $nextSort->toString()]))
         ]);
     }
 
