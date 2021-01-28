@@ -24,7 +24,7 @@ function FlashMessagesForType(string $type, string $mainBg, string $textColor, s
             return;
         }
     ?>
-        <div class="rounded-md space-y-1 <?=$textColor?> <?=$mainBg?> p-2 relative" x-data="{ closed: false }" :class="{ hidden: closed }">
+        <div class="rounded-md space-y-1 <?=$textColor?> <?=$mainBg?> p-2 relative mb-2" x-data="{ closed: false }" :class="{ hidden: closed }">
           <?php foreach ($messages as $message): ?>
             <p><?=p($message)?></p>
           <?php endforeach; ?>

@@ -25,11 +25,8 @@ use function League\Plates\p;
 final class SizeScaleCreatePage extends Component
 {
     public function __invoke(): void {
-        $title = 'Size Scales | Create';
-        echo (new OneColumnLayout(function() use ($title) {
+        echo (new OneColumnLayout(function() {
         ?>
-            <?=PageTitle($title)?>
-
             <?=Card(function() {
             ?>
                 <form class="p-4 space-y-4" method="post">
@@ -54,6 +51,6 @@ final class SizeScaleCreatePage extends Component
             }, ['class' => 'max-w-lg'])?>
 
         <?php
-        }))->title($title);
+        }))->titleAndPageTitle('Size Scales | Create');
     }
 }

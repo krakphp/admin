@@ -27,12 +27,21 @@ final class SizeScaleTest extends \PHPUnit\Framework\TestCase
     }
 
     /** @test */
-    public function does_not_allow_updating_when_not_in_draft() {
+    public function does_not_allow_updating_sizes_when_not_in_draft() {
         $this->given_a_published_size_scale('Test', ['1']);
         $this->when_a_size_scale_is(function(SizeScale $sizeScale) {
-            $sizeScale->update('Updated', []);
+            $sizeScale->update('Test', ['1', '2']);
+        }, true);
+        $this->then_an_exception_is_thrown('Cannot update sizes for published size scales.');
+    }
+
+    /** @test */
+    public function allow_updating_name_when_published_regardless_of_size_order() {
+        $this->given_a_published_size_scale('Test', ['1', '2']);
+        $this->when_a_size_scale_is(function(SizeScale $sizeScale) {
+            $sizeScale->update('Updated', ['2', '1']);
         });
-        $this->then_an_exception_is_thrown('Can only update size scales in draft state.');
+        $this->then_size_scale_name_and_sizes_match('Updated', ['1', '2']);
     }
 
     /** @test */
@@ -40,8 +49,20 @@ final class SizeScaleTest extends \PHPUnit\Framework\TestCase
         $this->given_a_published_size_scale('Test', ['1']);
         $this->when_a_size_scale_is(function(SizeScale $sizeScale) {
             $sizeScale->publish();
-        });
+        }, true);
         $this->then_an_exception_is_thrown('Can only publish size scales in draft state.');
+    }
+
+    /** @test */
+    public function can_publish_shows_true_on_draft() {
+        $this->given_a_draft_size_scale('Test', []);
+        $this->then_the_size_can_be_published(true);
+    }
+
+    /** @test */
+    public function can_publish_shows_false_if_published() {
+        $this->given_a_published_size_scale('Test', []);
+        $this->then_the_size_can_be_published(false);
     }
 
     private function given_a_draft_size_scale(string $name, array $sizes) {
@@ -53,13 +74,16 @@ final class SizeScaleTest extends \PHPUnit\Framework\TestCase
         $this->sizeScale->publish();
     }
 
-    private function when_a_size_scale_is(callable $fn) {
+    private function when_a_size_scale_is(callable $fn, bool $catch = false) {
         try {
             $res = $fn($this->sizeScale);
             if ($res) {
                 $this->sizeScale = $res;
             }
         } catch (\Throwable $e) {
+            if (!$catch) {
+                throw $e;
+            }
             $this->exception = $e;
         }
     }
@@ -72,5 +96,9 @@ final class SizeScaleTest extends \PHPUnit\Framework\TestCase
     private function then_an_exception_is_thrown(string $message) {
         $this->assertNotNull($this->exception, 'Exception should have been thrown.');
         $this->assertEquals($message, $this->exception->getMessage());
+    }
+
+    private function then_the_size_can_be_published(bool $published) {
+        $this->assertEquals($published, $this->sizeScale->canPublish());
     }
 }

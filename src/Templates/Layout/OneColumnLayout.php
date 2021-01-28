@@ -5,6 +5,7 @@ namespace Krak\Admin\Templates\Layout;
 use League\Plates\Component;
 use League\Plates\ComponentContext;
 use League\Plates\Portal;
+use function Krak\Admin\Templates\Form\FlashMessages;
 use function Krak\Admin\Templates\Typography\PageTitle;
 use function League\Plates\attrs;
 use function League\Plates\Extension\Symfony\path;
@@ -41,6 +42,7 @@ final class OneColumnLayout extends Component
               <div class="bg-gray-50 h-full flex-grow h-96">
                 <div class="container mx-auto py-6 px-8 text-gray-800">
                   <?=$this->pageTitle ? PageTitle(p($this->pageTitle)) : null?>
+                  <?=FlashMessages()?>
                   <?=$children?>
                 </div>
               </div>

@@ -8,6 +8,7 @@ use Demo\App\Catalog\UI\SortTuple;
 use Doctrine\Common\Collections\Collection;
 use Krak\Admin\Templates\Layout\OneColumnLayout;
 use Krak\Admin\Templates\Table;
+use Krak\Admin\Templates\Typography\FormLink;
 use League\Plates\Component;
 use League\Plates\Extension\Heroicons\OutlineIcon;
 use League\Plates\Extension\Pagination\ItemPage;
@@ -19,10 +20,7 @@ use function Krak\Admin\Templates\Typography\Button;
 use function Krak\Admin\Templates\Typography\ButtonLink;
 use function Krak\Admin\Templates\Typography\PageTitle;
 use function Krak\Admin\Templates\Typography\TextLink;
-use function League\Plates\attrs;
-use function League\Plates\Extension\Symfony\csrfToken;
 use function League\Plates\Extension\Symfony\path;
-use function League\Plates\classNames;
 use function League\Plates\h;
 use function League\Plates\p;
 use Krak\Fun\{f, c};
@@ -42,7 +40,6 @@ final class SizeScaleListPage extends Component
         echo (new OneColumnLayout(function() {
             $totalResults = count($this->sizeScales);
         ?>
-          <?=PageTitle('Size Scales | List')?>
           <div class="flex justify-between items-center my-4">
             <form method="get" class="flex space-x-2">
               <?=p([
@@ -76,7 +73,7 @@ final class SizeScaleListPage extends Component
           ])?>
           <?=h('div', $this->Pagination($this->params->page(), $this->params->pageSize(), $totalResults), ['class' => 'mt-4 text-center'])?>
         <?php
-        }))->title('Size Scales | List');
+        }))->titleAndPageTitle('Size Scales | List');
     }
 
     private function TableBody() {
@@ -89,26 +86,12 @@ final class SizeScaleListPage extends Component
                 Table::Td(h('div', [
                     TextLink('View', path('catalog_size_scale_admin_view', ['id' => $sizeScale->id()])),
                     TextLink('Edit', path('catalog_size_scale_admin_edit', ['id' => $sizeScale->id()])),
-                    h(
-                        'div',
-                        self::FormLink('Delete', path('catalog_size_scale_admin_delete', ['id' => $sizeScale->id()]), 'delete'),
-                        ['class' => 'inline-block']
-                    ),
-                ], ['class' => 'text-right space-x-2'])),
+                    FormLink::delete(path('catalog_size_scale_admin_delete', ['id' => $sizeScale->id()]), function() {
+                      ?> <button class="text-red-400 hover:text-red-500 underline" type="submit">Delete</button> <?php
+                    }, ['class' => 'inline-block']),
+                ], ['class' => 'space-x-2 flex justify-end'])),
             ]);
         }, $this->sizeScales) : Table::Tr([Table::Td('No Results', ['class' => 'text-center text-gray-400', 'colspan' => 5])]);
-    }
-
-    private static function FormLink(string $title, string $action, string $method) {
-        return p(function() use ($title, $action, $method) {
-        ?>
-          <form action="<?=$action?>" method="post" class="inline-block">
-            <input type="hidden" name="_method" value="<?=$method?>"/>
-            <input type="hidden" name="_token" value="<?=csrfToken('delete-size-scale')?>"/>
-            <button class="text-red-400 hover:text-red-500 underline" type="submit"><?=p($title)?></button>
-          </form>
-        <?php
-        });
     }
 
     private static function SearchHighlight(?string $search, $children) {

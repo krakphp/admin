@@ -45,6 +45,10 @@ class SizeScale
         return $this->sizes->toArray();
     }
 
+    public function canPublish(): bool {
+        return $this->status->isDraft();
+    }
+
     public function publish(): void {
         if (!$this->status->isDraft()) {
             throw new \RuntimeException('Can only publish size scales in draft state.');
@@ -61,12 +65,15 @@ class SizeScale
     }
 
     public function update(string $name, array $sizes): void {
-        if (!$this->status->isDraft()) {
-            throw new \RuntimeException('Can only update size scales in draft state.');
+        if ($this->status->isArchived()) {
+            throw new \RuntimeException('Cannot update archived size scales.');
         }
 
         $this->name = $name;
 
+        if ($this->status->isPublished() && $this->sizesAreDifferentThan($sizes)) {
+            throw new \RuntimeException('Cannot update sizes for published size scales.');
+        }
 
         /** @var SizeScaleSize[] $sizeEntitiesBySize */
         $sizeEntitiesBySize = f\arrayReindex(c\method('size'), $this->sizes ?? []);
@@ -83,5 +90,12 @@ class SizeScale
                 $this->sizes->removeElement($sizeEntity);
             }
         }
+    }
+
+    private function sizesAreDifferentThan(array $sizes): bool {
+        $existingSizes = f\arrayMap(c\method('size'), $this->sizes);
+        sort($sizes);
+        sort($existingSizes);
+        return $existingSizes !== $sizes;
     }
 }

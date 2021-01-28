@@ -4,9 +4,11 @@ namespace Demo\App\Catalog\UI\Component\SizeScale;
 
 use Demo\App\Catalog\Domain\SizeScale;
 use Krak\Admin\Templates\Layout\OneColumnLayout;
+use Krak\Admin\Templates\Typography\FormLink;
 use League\Plates\Component;
 use function Krak\Admin\Templates\Typography\{Button, ButtonLink, Card, DefinitionList, DefinitionListItem, PageTitle,
     TextLink};
+use function Krak\Admin\Templates\Form\FlashMessages;
 use function League\Plates\Extension\Symfony\path;
 use function League\Plates\{p, h};
 
@@ -19,10 +21,9 @@ final class SizeScaleViewPage extends Component
     }
 
     public function __invoke(): void {
-        $title = 'Size Scales | ' . $this->sizeScale->name();
-        echo (new OneColumnLayout(function() use ($title) {
+        echo (new OneColumnLayout(function() {
         ?>
-            <?=PageTitle($title)?>
+            <?=FlashMessages()?>
             <?=Card([
                 DefinitionList([
                     DefinitionListItem('Id', $this->sizeScale->id()),
@@ -32,10 +33,13 @@ final class SizeScaleViewPage extends Component
                 ]),
                 h('div', [
                     TextLink('Show All', path('catalog_size_scale_admin_list')),
-                    TextLink('Edit', path('catalog_size_scale_admin_edit', ['id' => $this->sizeScale->id()]))
-                ], ['class' => 'space-x-2 mt-4'])
+                    TextLink('Edit', path('catalog_size_scale_admin_edit', ['id' => $this->sizeScale->id()])),
+                    FormLink::post(path('catalog_size_scale_admin_publish', ['id' => $this->sizeScale->id()]), function() {
+                        ?> <button class="text-blue-400 hover:text-blue-500 underline" type="submit">Publish</button><?php
+                    })
+                ], ['class' => 'space-x-2 mt-4 flex items-center'])
             ], ['class' => 'mt-4 max-w-lg p-4'])?>
         <?php
-        }))->title($title);
+        }))->titleAndPageTitle('Size Scales | ' . $this->sizeScale->name());
     }
 }

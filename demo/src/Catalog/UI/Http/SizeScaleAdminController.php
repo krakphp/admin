@@ -71,19 +71,21 @@ final class SizeScaleAdminController extends AbstractController
             return new SizeScaleEditPage($sizeScale);
         }
 
-        $res = ($this->handleUpdateSizeScale)(new UpdateSizeScale(
-            (int) $id,
-            $req->request->get('name'),
-            $req->request->get('sizes')
-        ));
+        try {
+            $res = ($this->handleUpdateSizeScale)(new UpdateSizeScale(
+                (int) $id,
+                $req->request->get('name'),
+                $req->request->get('sizes')
+            ));
+        } catch (\Throwable $e) {
+            $this->addFlash('error', 'An error occurred during editing size scale: ' . $e->getMessage());
+            return $this->redirectToRoute('catalog_size_scale_admin_edit', ['id' => $id]);
+        }
+
         return $this->redirectToRoute('catalog_size_scale_admin_view', ['id' => $res->id()]);
     }
 
     public function deleteAction(Request $req, string $id) {
-        if (!$this->isCsrfTokenValid('delete-size-scale', $req->request->get('_token'))) {
-            throw new InvalidCsrfTokenException();
-        }
-
         ($this->handleDeleteSizeScale)(new DeleteSizeScale($id));
 
         return $this->redirectToRoute('catalog_size_scale_admin_list');
