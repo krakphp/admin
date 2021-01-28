@@ -30,7 +30,36 @@ Theme::overrideDefaults([
 
 ## Development Notes
 
-Form Structure Usages
+### Todo List
+
+There are two scopes of work, first build specific functionality, then start abstracting that functionality
+
+**Specific**
+
+- Build Test Suite for demo app Admin functionality
+  - Should include some html utilities as well, maybe even page object model helpers
+- Add some form of form validation to use
+- Add link fields to link to other admin pages for related entities
+- Build admin for Target Size scales
+- Build admin for size scale mappings to show example of selecting a reference entity field.
+- only allow deleting draft size scales
+- published size scales can only be archived
+- archiving can happen if we duplicate the product.
+
+**Abstract**
+
+- Abstract test suite utilities to make it easy to test CRUD actions, searching/filtering, etc etc
+- Abstract admin functionality
+- Proper Theming Support
+
+#### Abstraction
+
+  - once done, build helpers as well that can be used
+    to easily test such functionality
+- Build entity/admin for Store entity that takes a custom address field and status field of open/offline to test select boxes
+- Start abstracting admin functionality for entities
+
+### Form Structure Usages
 
 - Display
   - View (read) / Edit (write) / List (tables)
