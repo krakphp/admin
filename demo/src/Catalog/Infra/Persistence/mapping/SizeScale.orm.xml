@@ -10,6 +10,7 @@
         </id>
         <field name="name"/>
         <field name="status" type="size_scale_status"/>
+        <field name="rootVersionId" nullable="true" />
         <one-to-many field="sizes" target-entity="SizeScaleSize" mapped-by="sizeScale" fetch="EAGER" orphan-removal="true">
             <cascade><cascade-all/></cascade>
         </one-to-many>

@@ -29,6 +29,7 @@ final class SizeScaleViewPage extends Component
                     DefinitionListItem('Id', $this->sizeScale->id()),
                     DefinitionListItem('Name', $this->sizeScale->name()),
                     DefinitionListItem('Status', $this->sizeScale->status()),
+                    DefinitionListItem('Root Version Id', $this->sizeScale->rootVersionId()),
                     DefinitionListItem('Sizes', PresentedSizeScale::csvSizes($this->sizeScale))
                 ]),
                 h('div', [

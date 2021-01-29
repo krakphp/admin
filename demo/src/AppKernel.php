@@ -2,14 +2,17 @@
 
 namespace Demo\App;
 
+use DAMA\DoctrineTestBundle\DAMADoctrineTestBundle;
 use Doctrine\Bundle\DoctrineBundle\DoctrineBundle;
 use Krak\Admin\Bridge\Symfony\AdminBundle;
 use Krak\Admin\Form\{Field, FieldType, Form};
 use Krak\Admin\Templates\{Crud\CrudCreatePage, Crud\CrudListPage, HomePage, Layout\OneColumnLayout, Modal, Typography};
 use League\Plates\Extension\AlpineJs\AlpineJs;
 use League\Plates\Extension\Symfony\PlatesBundle;
+use Nyholm\BundleTest\CompilerPass\PublicServicePass;
 use Symfony\Bundle\FrameworkBundle\FrameworkBundle;
 use Symfony\Bundle\FrameworkBundle\Kernel\MicroKernelTrait;
+use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\Configurator\ContainerConfigurator;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Kernel;
@@ -29,6 +32,10 @@ final class AppKernel extends Kernel
         yield new DoctrineBundle();
         yield new PlatesBundle();
         yield new AdminBundle();
+
+        if ($this->environment === 'test') {
+            yield new DAMADoctrineTestBundle();
+        }
     }
 
     public function configureRoutes(RoutingConfigurator $routes) {
@@ -59,7 +66,7 @@ final class AppKernel extends Kernel
 
         $c->extension('doctrine', [
             'dbal' => [
-                'url' => 'sqlite:///%kernel.project_dir%/var/data.db',
+                'url' => 'sqlite:///%kernel.project_dir%/var/data-%kernel.environment%.db',
                 'types' => [
                     'size_scale_status' => Catalog\Infra\Doctrine\SizeScaleStatusType::class,
                 ]
@@ -80,6 +87,12 @@ final class AppKernel extends Kernel
         ]);
 
         $c->services()->defaults()->autowire()->autoconfigure()->private()->set(PlaygroundCommand::class);
+    }
+
+    protected function build(ContainerBuilder $container) {
+        if ($this->environment === 'test') {
+            $container->addCompilerPass(new PublicServicePass('/^Demo\\.*|demo\..*/'));
+        }
     }
 
     public function homePage() {

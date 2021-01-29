@@ -5,6 +5,7 @@ namespace Demo\App\Catalog\Domain;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Krak\Fun\{f, c};
+use function Krak\Effects\expect;
 
 class SizeScale
 {
@@ -14,19 +15,23 @@ class SizeScale
     private $status;
     /** @var Collection */
     private $sizes;
+    /** @var ?string */
+    private $rootVersionId;
     /** @var ?SizeScale */
-    private $versionRoot;
+    private $prevVersion;
     /** @var ?SizeScale */
-    private $parent;
+    private $nextVersion;
 
-    public function __construct(string $name, array $sizes) {
+    private function __construct(string $name, array $sizes, string $rootVersionId) {
         $this->sizes = new ArrayCollection();
         $this->status = SizeScaleStatus::draft();
+        $this->rootVersionId = $rootVersionId;
         $this->update($name, $sizes);
     }
 
-    public static function create(CreateSizeScale $command): self {
-        return new self($command->name(), $command->sizes());
+    public static function create(CreateSizeScale $command) {
+        $generatedRootVersionId = expect(GeneratedRootVersionId::class, yield new GenerateRootVersionId());
+        return new self($command->name(), $command->sizes(), $generatedRootVersionId->rootVersionId());
     }
 
     public function id(): ?int {
@@ -41,8 +46,16 @@ class SizeScale
         return $this->status;
     }
 
+    public function rootVersionId(): ?string {
+        return $this->rootVersionId;
+    }
+
     public function sizes(): array {
         return $this->sizes->toArray();
+    }
+
+    public function canBeDeleted(): bool {
+        return $this->status->isDraft();
     }
 
     public function canPublish(): bool {
@@ -55,8 +68,8 @@ class SizeScale
         }
 
         $this->status = SizeScaleStatus::published();
-        if ($this->parent) {
-            $this->parent->status = SizeScaleStatus::archived();
+        if ($this->prevVersion) {
+            $this->prevVersion->status = SizeScaleStatus::archived();
         }
     }
 

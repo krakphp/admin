@@ -48,6 +48,7 @@ final class SizeScaleAdminController extends AbstractController
         return $params->search()
             ? $criteria
                 ->where(Criteria::expr()->contains('name', $params->search()))
+                ->orWhere(Criteria::expr()->eq('rootVersionId', $params->search()))
                 ->orWhere(Criteria::expr()->eq('status', $params->search()))
             : $criteria;
     }

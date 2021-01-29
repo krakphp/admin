@@ -15,6 +15,9 @@ final class HandleDeleteSizeScale
 
     public function __invoke(DeleteSizeScale $command): void {
         $sizeScale = $this->sizeScaleRepo->get($command->sizeScaleId());
+        if (!$sizeScale->canBeDeleted()) {
+            throw new \RuntimeException('Only draft size scales can be deleted.');
+        }
         $this->sizeScaleRepo->remove($sizeScale);
     }
 }

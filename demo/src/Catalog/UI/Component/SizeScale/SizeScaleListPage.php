@@ -66,6 +66,7 @@ final class SizeScaleListPage extends Component
               Table::Th($this->SortableHeader('Id')),
               Table::Th($this->SortableHeader('Name')),
               Table::Th($this->SortableHeader('Status')),
+              Table::Th($this->SortableHeader('Root Version Id')),
               Table::Th('Sizes'),
               Table::Th(h('div', 'Total Results: ' . $totalResults, ['class' => 'text-right'])),
             ]),
@@ -82,6 +83,7 @@ final class SizeScaleListPage extends Component
                 Table::Td($sizeScale->id()),
                 Table::Td(self::SearchHighlight($this->params->search(), $sizeScale->name())),
                 Table::Td(self::SearchHighlight($this->params->search(), $sizeScale->status())),
+                Table::Td(self::SearchHighlight($this->params->search(), $sizeScale->rootVersionId())),
                 Table::Td(PresentedSizeScale::csvSizes($sizeScale)),
                 Table::Td(h('div', [
                     TextLink('View', path('catalog_size_scale_admin_view', ['id' => $sizeScale->id()])),

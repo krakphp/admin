@@ -19,6 +19,9 @@
         </testsuite>
     </testsuites>
 
+    <extensions>
+        <extension class="DAMA\DoctrineTestBundle\PHPUnit\PHPUnitExtension"/>
+    </extensions>
     <coverage processUncoveredFiles="true">
         <include>
             <directory suffix=".php">src</directory>

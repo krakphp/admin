@@ -21,11 +21,14 @@
     "krak/schema": "^0.2.0"
   },
   "require-dev": {
+    "dama/doctrine-test-bundle": "^6.5",
     "doctrine/collections": "^1.6",
     "doctrine/doctrine-bundle": "^2.2",
     "doctrine/orm": "^2.8",
+    "krak/effects": "^0.1.0",
     "krak/fn": "^1.2",
     "krak/struct-gen": "^0.1.1",
+    "nyholm/symfony-bundle-test": "^1.7",
     "phpunit/phpunit": "^9.3",
     "symfony/asset": "^5.1",
     "symfony/console": "^5.2",
