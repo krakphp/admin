@@ -112,3 +112,16 @@ class SizeScale
         return $existingSizes !== $sizes;
     }
 }
+
+final class GenerateRootVersionId {}
+final class GeneratedRootVersionId {
+    private $rootVersionId;
+
+    public function __construct(string $rootVersionId) {
+        $this->rootVersionId = $rootVersionId;
+    }
+
+    public function rootVersionId(): string {
+        return $this->rootVersionId;
+    }
+}

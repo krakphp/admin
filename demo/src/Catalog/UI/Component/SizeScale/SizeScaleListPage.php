@@ -66,7 +66,7 @@ final class SizeScaleListPage extends Component
               Table::Th($this->SortableHeader('Id')),
               Table::Th($this->SortableHeader('Name')),
               Table::Th($this->SortableHeader('Status')),
-              Table::Th($this->SortableHeader('Root Version Id')),
+              Table::Th('Root Version Id'),
               Table::Th('Sizes'),
               Table::Th(h('div', 'Total Results: ' . $totalResults, ['class' => 'text-right'])),
             ]),
@@ -93,7 +93,7 @@ final class SizeScaleListPage extends Component
                     }, ['class' => 'inline-block']),
                 ], ['class' => 'space-x-2 flex justify-end'])),
             ]);
-        }, $this->sizeScales) : Table::Tr([Table::Td('No Results', ['class' => 'text-center text-gray-400', 'colspan' => 5])]);
+        }, $this->sizeScales) : Table::Tr([Table::Td('No Results', ['class' => 'text-center text-gray-400', 'colspan' => 6])]);
     }
 
     private static function SearchHighlight(?string $search, $children) {

@@ -111,6 +111,12 @@ final class PaginationTest extends TestCase
             'page' => 5,
             'pageSize' => 1,
         ];
+        yield '0,1,25' => [
+            'pages' => [],
+            'totalResults' => 0,
+            'page' => 1,
+            'pageSize' => 25,
+        ];
     }
 
     private function page(string $title, int $page) {

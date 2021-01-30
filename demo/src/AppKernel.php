@@ -61,7 +61,8 @@ final class AppKernel extends Kernel
     public function configureContainer(ContainerConfigurator $c) {
         $c->import(__DIR__ . '/Catalog/Infra/Symfony/services.php');
         $c->extension('framework', [
-            'session' => ['enabled' => true]
+            'session' => ['enabled' => true],
+            'secrets' => ['enabled' => false]
         ]);
 
         $c->extension('doctrine', [

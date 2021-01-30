@@ -53,6 +53,10 @@ final class Pagination extends Component
     }
 
     private function listItems(): iterable {
+        if ($this->totalResults === 0) {
+            return;
+        }
+
         if ($this->includeFirstLast) {
             yield ($this->render)(new ItemPage('First', $this->page <= $this->firstPage() ? null : $this->firstPage()));
         }
