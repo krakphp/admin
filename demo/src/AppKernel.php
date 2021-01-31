@@ -62,8 +62,14 @@ final class AppKernel extends Kernel
         $c->import(__DIR__ . '/Catalog/Infra/Symfony/services.php');
         $c->extension('framework', [
             'session' => ['enabled' => true],
-            'secrets' => ['enabled' => false]
+            'secrets' => ['enabled' => false],
         ]);
+        if ($this->environment === 'test') {
+            $c->extension('framework', [
+                'test' => true,
+                'session' => ['storage_id' => 'session.storage.mock_file']
+            ]);
+        }
 
         $c->extension('doctrine', [
             'dbal' => [

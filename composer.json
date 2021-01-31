@@ -18,7 +18,8 @@
   "require": {
     "php": "^7.2",
     "krak/adt": "^0.1.1",
-    "krak/schema": "^0.2.0"
+    "krak/schema": "^0.2.0",
+    "symfony/panther": "^0.9.0"
   },
   "require-dev": {
     "dama/doctrine-test-bundle": "^6.5",
@@ -32,6 +33,7 @@
     "phpunit/phpunit": "^9.3",
     "symfony/asset": "^5.1",
     "symfony/console": "^5.2",
+    "symfony/css-selector": "^5.2",
     "symfony/debug-bundle": "^5.1",
     "symfony/form": "^5.1",
     "symfony/framework-bundle": "^5.1",

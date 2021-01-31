@@ -2,7 +2,7 @@
 
 namespace Demo\App\Catalog\App;
 
-use Demo\App\Catalog\App\TestUtil\SizeScaleSteps;
+use Demo\App\Catalog\App\Tests\SizeScaleSteps;
 use Demo\App\Catalog\Domain\DeleteSizeScale;
 use Demo\App\Catalog\Domain\SizeScaleTest;
 use Demo\App\Test\KernelTestCase;
