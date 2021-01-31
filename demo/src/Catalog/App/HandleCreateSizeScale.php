@@ -20,7 +20,7 @@ final class HandleCreateSizeScale
     public function __invoke(CreateSizeScale $command): SizeScale {
         $sizeScale = handleEffects(SizeScale::create($command), [
             GenerateRootVersionId::class => function() {
-                return new GeneratedRootVersionId(base64_encode(random_bytes(16)));
+                return new GeneratedRootVersionId(bin2hex(random_bytes(4)));
             },
         ]);
         $this->sizeScaleRepo->save($sizeScale);

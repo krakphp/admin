@@ -20,9 +20,9 @@ final class SizeScaleTest extends \PHPUnit\Framework\TestCase
             ]);
         });
         $this->then_size_scale_matches($this->sizeScale(), [
-            $this->matchSizeScaleName('Test'),
-            $this->matchSizeScaleSizes(['1']),
-            $this->matchRootVersionId('1234'),
+            self::matchSizeScaleName('Test'),
+            self::matchSizeScaleSizes(['1']),
+            self::matchRootVersionId('1234'),
         ]);
     }
 
@@ -144,8 +144,8 @@ final class SizeScaleTest extends \PHPUnit\Framework\TestCase
 
     private function then_size_scale_name_and_sizes_match(string $name, array $sizes) {
         $this->then_size_scale_matches($this->sizeScale, [
-            $this->matchSizeScaleName($name),
-            $this->matchSizeScaleSizes($sizes)
+            self::matchSizeScaleName($name),
+            self::matchSizeScaleSizes($sizes)
         ]);
     }
 
@@ -168,21 +168,27 @@ final class SizeScaleTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals($published, $this->sizeScale->canPublish());
     }
 
-    private function matchSizeScaleName(string $name): callable {
+    public static function matchSizeScaleName(string $name): callable {
         return function(SizeScale $sizeScale) use ($name) {
-            $this->assertEquals($name, $sizeScale->name());
+            self::assertEquals($name, $sizeScale->name());
         };
     }
 
-    private function matchSizeScaleSizes(array $sizes): callable {
+    public static function matchSizeScaleStatus(SizeScaleStatus $status) {
+        return function(SizeScale $sizeScale) use ($status) {
+            self::assertEquals($status, $sizeScale->status());
+        };
+    }
+
+    public static function matchSizeScaleSizes(array $sizes): callable {
         return function(SizeScale $sizeScale) use ($sizes) {
-            $this->assertEquals($sizes, f\toArray(f\arrayMap(c\method('size'), $this->sizeScale->sizes())));
+            self::assertEquals($sizes, f\toArray(f\arrayMap(c\method('size'), $sizeScale->sizes())));
         };
     }
 
-    private function matchRootVersionId(string $rootVersionId) {
+    public static function matchRootVersionId(string $rootVersionId) {
         return function(SizeScale $sizeScale) use ($rootVersionId) {
-            $this->assertEquals($rootVersionId, $sizeScale->rootVersionId());
+            self::assertEquals($rootVersionId, $sizeScale->rootVersionId());
         };
     }
 }
