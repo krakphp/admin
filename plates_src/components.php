@@ -171,6 +171,6 @@ function p($component) {
             }
         });
     }
-    dump($component);
+
     throw new \RuntimeException('Could not convert component into an instance of Component.');
 }

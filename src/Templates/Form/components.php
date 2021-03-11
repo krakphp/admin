@@ -125,3 +125,19 @@ JavaScript
       <?php
     });
 }
+
+function WrapNulls(?callable $p = null) {
+    return function($children) use ($p) {
+        return $children === null
+            ? h('span', 'null', ['class' => 'px-2 py-1 bg-gray-500 text-gray-50 rounded-md'])
+            : ($p ?: 'League\Plates\p')($children);
+    };
+}
+
+function SearchHighlight(?string $search, $children) {
+    return $search ? p(function() use ($search, $children) {
+        echo preg_replace_callback('/'. preg_quote($search)  .'/i', function(array $matches) {
+            return h('span', $matches[0], ['class' => 'bg-yellow-200']);
+        }, p($children));
+    }) : p($children);
+}

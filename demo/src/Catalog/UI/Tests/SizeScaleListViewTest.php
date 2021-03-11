@@ -3,7 +3,7 @@
 namespace Demo\App\Catalog\UI\Tests;
 
 use Demo\App\AppKernel;
-use Demo\App\Catalog\App\Tests\SizeScaleSteps;
+use Demo\App\Catalog\Domain\Tests\SizeScaleSteps;
 use Demo\App\Catalog\Domain\SizeScaleTest;
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 use Symfony\Component\DomCrawler\Crawler;

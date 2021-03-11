@@ -72,6 +72,7 @@ final class OneColumnLayout extends Component
             Nav::Item('Crud Create', path('crud_create')),
             Nav::Item('Dynamic Form', path('size_scales')),
             Nav::Item('Size Scales', path('catalog_size_scale_admin_list')),
+            Nav::Item('Size Scales Generic', path('catalog_size_scale_admin_list_generic')),
         ]);
     }
 }

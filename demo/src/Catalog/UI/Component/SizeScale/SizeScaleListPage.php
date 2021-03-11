@@ -14,8 +14,10 @@ use League\Plates\Extension\Heroicons\OutlineIcon;
 use League\Plates\Extension\Pagination\ItemPage;
 use League\Plates\Extension\Pagination\Pagination;
 use function Krak\Admin\Templates\Form\HiddenInput;
+use function Krak\Admin\Templates\Form\SearchHighlight;
 use function Krak\Admin\Templates\Form\SelectInput;
 use function Krak\Admin\Templates\Form\TextInput;
+use function Krak\Admin\Templates\Form\WrapNulls;
 use function Krak\Admin\Templates\Typography\Button;
 use function Krak\Admin\Templates\Typography\ButtonLink;
 use function Krak\Admin\Templates\Typography\PageTitle;
@@ -77,13 +79,17 @@ final class SizeScaleListPage extends Component
         }))->titleAndPageTitle('Size Scales | List');
     }
 
+
     private function TableBody() {
-        return !$this->sizeScales->isEmpty() ? f\map(function(SizeScale $sizeScale) {
+        $el = WrapNulls(function($children) {
+            return SearchHighlight($this->params->search(), $children);
+        });
+        return !$this->sizeScales->isEmpty() ? f\map(function(SizeScale $sizeScale) use ($el) {
             return Table::Tr([
                 Table::Td($sizeScale->id()),
-                Table::Td(self::SearchHighlight($this->params->search(), $sizeScale->name())),
-                Table::Td(self::SearchHighlight($this->params->search(), $sizeScale->status())),
-                Table::Td(self::SearchHighlight($this->params->search(), $sizeScale->rootVersionId())),
+                Table::Td($el($sizeScale->name())),
+                Table::Td($el($sizeScale->status())),
+                Table::Td($el($sizeScale->rootVersionId())),
                 Table::Td(PresentedSizeScale::csvSizes($sizeScale)),
                 Table::Td(h('div', [
                     TextLink('View', path('catalog_size_scale_admin_view', ['id' => $sizeScale->id()])),
@@ -94,14 +100,6 @@ final class SizeScaleListPage extends Component
                 ], ['class' => 'space-x-2 flex justify-end'])),
             ]);
         }, $this->sizeScales) : Table::Tr([Table::Td('No Results', ['class' => 'text-center text-gray-400', 'colspan' => 6])]);
-    }
-
-    private static function SearchHighlight(?string $search, $children) {
-        return $search ? p(function() use ($search, $children) {
-            echo preg_replace_callback('/'. preg_quote($search)  .'/i', function(array $matches) {
-                return h('span', $matches[0], ['class' => 'bg-yellow-200']);
-            }, p($children));
-        }) : p($children);
     }
 
     private function SortableHeader(string $title, ?string $field = null) {

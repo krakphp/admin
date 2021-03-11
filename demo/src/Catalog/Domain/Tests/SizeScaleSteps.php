@@ -1,6 +1,6 @@
 <?php
 
-namespace Demo\App\Catalog\App\Tests;
+namespace Demo\App\Catalog\Domain\Tests;
 
 use Demo\App\Catalog\Domain\SizeScale;
 use Demo\App\Catalog\Domain\SizeScaleRepository;
